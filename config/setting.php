@@ -1,0 +1,46 @@
+<?php
+
+use App\Models\CompanyProfile;
+use Config\Core\Database;
+use Dotenv\Dotenv;
+
+/** Required Class */
+require_once(__DIR__ . "/vendor/autoload.php");
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+if(session_status() === PHP_SESSION_NONE) {
+    session_set_cookie_params([
+        'lifetime' => 3600, // 1Jam
+        'path' => "/",
+        'domain' => "",
+        'secure' => false,
+        'httponly' => true,
+        'samesite' => "Lax"
+    ]);
+
+    session_start();
+}
+
+date_default_timezone_set("Asia/Jakarta");
+error_reporting(E_ALL );
+ini_set("display_errors", ($_ENV['APP_MODE'] == "production"? 0 : 1));
+define("CONFIG_ROOT", __DIR__);
+define("WEB_ROOT", str_replace("config", "client-tridentpro.com", __DIR__));
+define("CRM_ROOT", str_replace("config", "admin-tridentpro.com", __DIR__));
+
+$db = Database::getConnection();
+CompanyProfile::init();
+
+function JsonResponse(array $data = []) {
+    /** ini tidak membaca script dibawahnya */
+    http_response_code($data['code'] ?? 200);
+    exit(json_encode([
+        ...$data,
+        'alert' => [
+            'title' => ($data['success'])? "Success" : "Failed",
+            'text' => $data['message'],
+            'icon' => ($data['success'])? "success" : "error"
+        ]
+    ]));
+}

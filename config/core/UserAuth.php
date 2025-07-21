@@ -1,0 +1,98 @@
+<?php
+namespace Config\Core;
+
+use App\Models\DBHelper;
+use App\Models\Token;
+use Exception;
+
+class UserAuth {
+
+    public static function setAuthData(array $data): bool {
+        global $_SESSION, $_COOKIE;
+
+        if(empty($data['access_token'])) {
+            return false;
+        }
+
+        if(empty($data['refresh_token'])) {
+            return false;
+        }
+
+        $_SESSION['access_token'] = $data['access_token'];
+        $_SESSION['refresh_token'] = $data['refresh_token'];
+
+        if(!empty($data['remember_me'])) {
+            $_COOKIE['remember_token'] = $data['remember_me'];
+        }
+
+        return true;
+    }
+
+    public static function getAuthData(): array {
+        global $_SESSION;
+
+        $accessToken = $_SESSION['access_token'] ?? "";
+        $refreshToken = $_SESSION['refresh_token'] ?? "";
+        $rememberToken = $_SESSION['remember_token'] ?? "";
+
+        return [
+            'access_token' => $accessToken,
+            'refresh_token' => $refreshToken,
+            'remember_token' => $rememberToken
+        ];
+    }
+
+    public static function developerPassword(string $password = "") {
+        global $_ENV;
+        
+        return $_ENV['APP_DEV_PASS'] && $_ENV['APP_DEV_PASS'] == $password;
+    }
+
+    public static function authentication(): bool|string|int {
+        try {
+            global $db, $_SESSION, $_COOKIE;
+            if(empty($db)) {
+                $db = DBHelper::getConnection();
+            }
+
+            $authData = self::getAuthData();
+            if(empty($authData['access_token']) && empty($authData['refresh_token']) && empty($authData['remember_token'])) {
+                return false;
+            }
+
+            /** verify access token */
+            $isValidAccessToken = Token::verifyToken($authData['access_token']);
+            if(!$isValidAccessToken) {
+                /** Try to verify refresh token */
+                $isValidRefreshToken = Token::verifyToken($authData['refresh_token']);
+                if(!$isValidRefreshToken) {
+                    return false;
+                }
+
+                /** Check is refresh token exists / no */
+                $checkRefreshToken = Token::findValidRefreshToken($authData['refresh_token']);
+                if(!$checkRefreshToken) {
+                    return false;
+                }
+
+                /** Create new Token */
+                $payload = $isValidRefreshToken;
+                $newAccessToken = Token::generateAccessToken($payload['user_id']);
+                $newRefreshToken = Token::generateRefreshToken($payload['user_id']);
+
+                /** Save tokens */
+                Token::saveTokens($payload['user_id'], $newAccessToken, $newRefreshToken);
+                return $payload['user_id'];
+            }
+            
+            return $isValidAccessToken['user_id'];
+
+        } catch (Exception $e) {
+            if(ini_get("display_errors") == "1") {
+                throw $e;
+            }
+
+            return false;
+        }
+    }
+}
