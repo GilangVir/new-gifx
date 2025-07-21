@@ -132,6 +132,6 @@ JsonResponse([
     'success'   => true,
     'message'   => "Login Sucessfull",
     'data'      => [
-        'redirect' => "/v/dashboard"
+        'redirect' => "/dashboard"
     ]
 ]);
