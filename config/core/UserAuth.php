@@ -95,4 +95,10 @@ class UserAuth {
             return false;
         }
     }
+
+    public function logout() {
+        session_destroy();
+        session_regenerate_id();
+        return true;
+    }
 }
