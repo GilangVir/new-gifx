@@ -69,7 +69,7 @@ $referral = Helper::form_input($_GET['referral'] ?? "");
 						</label>
 					</div>
 				</div>
-				<button name="submit_register" class="btn btn-primary w-100 login-btn">Sign up</button>
+				<button type="submit" name="submit_register" class="btn btn-primary w-100 login-btn">Sign up</button>
 			</form>
 			<!-- <div class="other-option">
 				<p>Or continue with</p>
