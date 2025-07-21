@@ -32,19 +32,6 @@ if(empty($type) || !in_array($type, ['whatsapp', 'sms'])) {
     ]);
 }
 
-/** check terakhir mengirim */
-$timenow = time();
-if(!empty($user['MBR_OTP_DATETIME']) && $timenow < strtotime($user['MBR_OTP_DATETIME'])) {
-    $dateNow = new Datetime(date("Y-m-d H:i:s", $timenow));
-    $dateOtp = new Datetime($user['MBR_OTP_DATETIME']);
-    $secondDiff = $dateNow->diff($dateOtp)->s;
-    JsonResponse([
-        'success' => false,
-        'message' => "You need to wait {$secondDiff} seconds to send again",
-        'data' => []
-    ]);
-}
-
 $otp = random_int(1000, 9999);
 $sendOtp = false;
 switch($type) {
@@ -61,6 +48,27 @@ switch($type) {
                 'message' => "Invalid Phone Number",
                 'data' => []
             ]);
+        }
+
+        /** Check Terakhir Mengirim */
+        $sqlCheckOtp = $db->query("SELECT LOGVER_DATA, LOGVER_DATETIME FROM tb_log_verihub WHERE LOGVER_MBR = {$phone} AND LOGVER_MODULE = '/v1/otp/send' ORDER BY ID_LOGVER DESC LIMIT 1");
+        if($sqlCheckOtp->num_rows == 1) {
+            $timelimit = 90;
+            $timenow = time();
+            $logver = $sqlCheckOtp->fetch_assoc();
+            $logverdata = json_decode($logver['LOGVER_DATA'], true);
+            if($logverdata['time_limit']) {
+                $timelimit = $logverdata['time_limit'];
+            }
+
+            $delay = strtotime("+{$timelimit} second", strtotime($logver['LOGVER_DATETIME']));
+            if($delay > $timenow) {
+                JsonResponse([
+                    'success' => false,
+                    'message' => "You have to wait a few minutes to send again",
+                    'data' => []
+                ]);
+            }
         }
 
         $sendOtp = Verihubs::sendOtp_sms(['phone' => $phone, 'otp' => $otp]);
