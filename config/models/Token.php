@@ -10,7 +10,7 @@ class Token extends TokenGenerator {
 
     }
 
-    public static function saveTokens($userId, $accessToken, $refreshToken): array|bool {
+    public static function saveTokens(int $userId, $accessToken, $refreshToken): array|bool {
         try {
             global $db;
             if(!$db) {
@@ -21,6 +21,7 @@ class Token extends TokenGenerator {
             $refreshTokenExpires = date('Y-m-d H:i:s', time() + REFRESH_TOKEN_LIFETIME);
     
             return DBHelper::insert("tb_member_token", [
+                'mbr_id' => $userId,
                 'access_token' => $accessToken,
                 'refresh_token' => $refreshToken,
                 'access_token_expires' => $accessTokenExpires,
