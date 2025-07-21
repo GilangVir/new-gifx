@@ -115,4 +115,54 @@ class User extends UserAuth {
 
         return true;
     }
+
+    public static function allowToApplyReferral(string $userid) {
+        try {
+            global $db;
+            /**
+             * Syarat
+             * 1. Belum memiliki Upline / Upline Bukan Admin
+             * 2. Belum create real account maupun progress real account
+             */
+
+            $sqlGet = $db->query("
+                SELECT 
+                    tm.MBR_IDSPN,
+                    COUNT(tr.ID_ACC) as TOTAL_ACC
+                FROM tb_member tm
+                LEFT JOIN (
+                    SELECT
+                        ID_ACC,
+                        ACC_MBR,
+                        ACC_LOGIN
+                    FROM tb_racc
+                    JOIN tb_racctype ON (ID_RTYPE = ACC_TYPE)
+                    WHERE UPPER(RTYPE_TYPE) != 'DEMO'
+                ) as tr ON (tr.ACC_MBR = tm.MBR_ID)
+                WHERE MD5(MD5(MBR_ID)) = '{$userid}'
+                GROUP BY tm.MBR_ID
+                LIMIT 1
+            ");
+
+            if($sqlGet->num_rows != 1) {
+                return false;
+            }
+
+            $detail = $sqlGet->fetch_assoc();
+            if($detail['TOTAL_ACC'] != 0) {
+                return false;
+            }
+
+            return (empty($detail['MBR_IDSPN']) || $detail['MBR_IDSPN'] == 1000000000)
+                ? true
+                : false;
+
+        } catch (Exception $e) {
+            if(ini_get("display_errors") == "1") {
+                throw $e;
+            }
+
+            return false;
+        }
+    }
 }
