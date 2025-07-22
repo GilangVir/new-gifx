@@ -2,7 +2,7 @@
 namespace App\Shared;
 
 use App\Models\DBHelper;
-use DateTime;
+use Imagick;
 use Exception;
 
 class Verihubs {
