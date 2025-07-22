@@ -2,6 +2,7 @@
 
 use App\Models\CompanyProfile;
 use Config\Core\Database;
+use Config\Core\SystemInfo;
 use Dotenv\Dotenv;
 
 /** Required Class */
@@ -9,18 +10,7 @@ require_once(__DIR__ . "/vendor/autoload.php");
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-if(session_status() === PHP_SESSION_NONE) {
-    session_set_cookie_params([
-        'lifetime' => 3600, // 1Jam
-        'path' => "/",
-        'domain' => "",
-        'secure' => false,
-        'httponly' => true,
-        'samesite' => "Lax"
-    ]);
-
-    session_start();
-}
+SystemInfo::refreshSession();
 
 date_default_timezone_set("Asia/Jakarta");
 error_reporting(E_ALL );
