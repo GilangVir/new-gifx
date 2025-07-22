@@ -66,11 +66,12 @@ if($isLoggedIn) {
 		button.addClass('loading');
 		$.post("/ajax/auth/signin", formData, function(resp) {
 			button.removeClass('loading');
-			Swal.fire(resp.alert).then(() => {
-				if(resp.success && resp.data.redirect) {
-					location.href = resp.data.redirect;
-				}
-			});
+			if(!resp.success) {
+				Swal.fire(resp.alert);
+				return false;
+			}
+
+			location.href = resp.data.redirect;
 		}, 'json');
 	});
 </script>
