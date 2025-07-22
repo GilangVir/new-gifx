@@ -2,6 +2,8 @@
 <div class="main-content">
     <?php
     use App\Models\Helper;
+use App\Shared\UrlParser;
+
     switch($pageFile) {
         case "verif": 
             if($user['MBR_VERIF'] != -1) {
@@ -20,9 +22,11 @@
 
         default: 
             if($user['MBR_STS'] != -1) die("<script>location.href = '/verif/step-1'; </script>");
-            file_exists(__DIR__ ."/".$pageFile.".php") 
-                ? include WEB_ROOT ."/".$pageFile.".php"
-                : include __DIR__ ."/"."404.php";
+            $fileUrl = UrlParser::urlToPath(Helper::getSafeInput($_GET));
+            $filename = WEB_ROOT ."/doc/$fileUrl.php";
+            file_exists($filename) 
+                ? require_once $filename
+                : require_once __DIR__ ."/"."404.php";
             break;
     }
     ?>
