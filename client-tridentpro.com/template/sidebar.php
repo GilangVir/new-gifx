@@ -10,7 +10,7 @@ $isIB = false;
         <ul class="sidebar-menu scrollable">
             <ul class="sidebar-item">
                 <li class="sidebar-dropdown-item">
-                    <a href="../dashboard" class="sidebar-link"><span class="nav-icon"><i class="fa-light fa-home"></i></span> <span class="sidebar-txt">Dashboard</span></a>
+                    <a href="/dashboard" class="sidebar-link"><span class="nav-icon"><i class="fa-light fa-home"></i></span> <span class="sidebar-txt">Dashboard</span></a>
                 </li>
             </ul>
 
@@ -58,10 +58,10 @@ $isIB = false;
                     <a role="button" class="sidebar-link-group-title has-sub">Profile</a>
                     <ul class="sidebar-link-group">
                         <li class="sidebar-dropdown-item">
-                            <a href="../personal-information" class="sidebar-link"><span class="nav-icon"><i class="fa-light fa-user"></i></span> <span class="sidebar-txt">Personal Information</span></a>
+                            <a href="/personal-information" class="sidebar-link"><span class="nav-icon"><i class="fa-light fa-user"></i></span> <span class="sidebar-txt">Personal Information</span></a>
                         </li>
                         <li class="sidebar-dropdown-item">
-                            <a href="../security" class="sidebar-link"><span class="nav-icon"><i class="fa-light fa-shield"></i></span> <span class="sidebar-txt">Security</span></a>
+                            <a href="/security" class="sidebar-link"><span class="nav-icon"><i class="fa-light fa-shield"></i></span> <span class="sidebar-txt">Security</span></a>
                         </li>
                     </ul>
                 </li>
@@ -70,7 +70,7 @@ $isIB = false;
                     <a role="button" class="sidebar-link-group-title has-sub">Trade</a>
                     <ul class="sidebar-link-group">
                         <li class="sidebar-dropdown-item">
-                            <a href="../account" class="sidebar-link"><span class="nav-icon"><i class="fa-light fa-user-tie"></i></span> <span class="sidebar-txt">Account</span></a>
+                            <a href="/account" class="sidebar-link"><span class="nav-icon"><i class="fa-light fa-user-tie"></i></span> <span class="sidebar-txt">Account</span></a>
                         </li>
                         <!-- <li class="sidebar-dropdown-item">
                             <a href="../web-trade" class="sidebar-link"><span class="nav-icon"><i class="fa-light fa-chart-column"></i></span> <span class="sidebar-txt">Web Trade</span></a>
@@ -87,10 +87,10 @@ $isIB = false;
                             </li>
                         <?php endif; ?>
                         <li class="sidebar-dropdown-item">
-                            <a href="../deposit" class="sidebar-link"><span class="nav-icon"><i class="fa-light fa-arrow-right-to-bracket"></i></span> <span class="sidebar-txt">Deposit</span></a>
+                            <a href="/deposit" class="sidebar-link"><span class="nav-icon"><i class="fa-light fa-arrow-right-to-bracket"></i></span> <span class="sidebar-txt">Deposit</span></a>
                         </li>
                         <li class="sidebar-dropdown-item">
-                            <a href="../withdrawal" class="sidebar-link"><span class="nav-icon"><i class="fa-light fa-arrow-right-from-bracket"></i></span> <span class="sidebar-txt">Withdrawal</span></a>
+                            <a href="/withdrawal" class="sidebar-link"><span class="nav-icon"><i class="fa-light fa-arrow-right-from-bracket"></i></span> <span class="sidebar-txt">Withdrawal</span></a>
                         </li>
                         <li class="sidebar-dropdown-item">
                             <a href="/internal-transfer" class="sidebar-link"><span class="nav-icon"><i class="fa-light fa-arrow-right-arrow-left"></i></span> <span class="sidebar-txt">Internal Transfer</span></a>
@@ -116,7 +116,7 @@ $isIB = false;
                 <li class="help-center">
                     <h3>Help Center</h3>
                     <!-- <p>We're an award-winning, forward thinking</p> -->
-                    <a href="../help-center" class="btn btn-sm btn-light">Go to Help Center</a>
+                    <a href="/help-center" class="btn btn-sm btn-light">Go to Help Center</a>
                 </li>
             <?php endif; ?>
         </ul>

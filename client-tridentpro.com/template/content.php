@@ -1,0 +1,49 @@
+<!-- main content start -->
+<div class="main-content">
+    <?php
+    switch($pageFile) {
+        case "verif": 
+            if($user['MBR_VERIF'] != -1) {
+                $user_step  = explode("-", $_GET['b'])[1] ?? $user['MBR_VERIF'];
+                if($user_step > $user['MBR_VERIF']) {
+                    die("<script>location.href = '/verif/step-".$user['MBR_VERIF']."'</script>");
+                }
+
+                $filename   = __DIR__ ."/$pageFile/".$_GET['b'].".php";
+                file_exists($filename) 
+                    ? include $filename
+                    : include __DIR__ ."/"."404.php";
+            }
+            break;
+
+        default: 
+            if($user['MBR_STS'] != -1) die("<script>location.href = '/verif/step-1'; </script>");
+            file_exists(__DIR__ ."/".$pageFile.".php") 
+                ? include __DIR__ ."/".$pageFile.".php"
+                : include __DIR__ ."/"."404.php";
+            break;
+    }
+    ?>
+    
+    <?php require_once __DIR__ . "/footer.php"; ?>
+</div>
+<!-- main content end -->
+
+<div class="ini-modal-file">
+    <style>
+        .modal-backdrop {
+            z-index: -1 !important;
+        }
+    </style>
+
+    <?php 
+        // create modal file at doc/modal/
+        if(!empty($_SESSION['modal']) && is_array($_SESSION['modal'])) {
+            foreach($_SESSION['modal'] as $modal) {
+                if(file_exists(__DIR__ . "/doc/modal/{$modal}.php")) {
+                    require_once __DIR__ . "/doc/modal/{$modal}.php";
+                }
+            }
+        }  
+    ?>
+</div>
