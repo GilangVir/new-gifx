@@ -1,25 +1,27 @@
 <!-- main content start -->
 <div class="main-content">
     <?php
+    use App\Models\Helper;
     switch($pageFile) {
         case "verif": 
             if($user['MBR_VERIF'] != -1) {
+                $stepPage = Helper::form_input($_GET['b']);
                 $user_step  = explode("-", $_GET['b'])[1] ?? $user['MBR_VERIF'];
                 if($user_step > $user['MBR_VERIF']) {
                     die("<script>location.href = '/verif/step-".$user['MBR_VERIF']."'</script>");
                 }
 
-                $filename   = __DIR__ ."/$pageFile/".$_GET['b'].".php";
+                $filename   = WEB_ROOT ."/doc/verif/$stepPage.php";
                 file_exists($filename) 
                     ? include $filename
-                    : include __DIR__ ."/"."404.php";
+                    : include __DIR__ . "/404.php";
             }
             break;
 
         default: 
             if($user['MBR_STS'] != -1) die("<script>location.href = '/verif/step-1'; </script>");
             file_exists(__DIR__ ."/".$pageFile.".php") 
-                ? include __DIR__ ."/".$pageFile.".php"
+                ? include WEB_ROOT ."/".$pageFile.".php"
                 : include __DIR__ ."/"."404.php";
             break;
     }
