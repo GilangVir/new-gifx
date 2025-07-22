@@ -34,7 +34,7 @@ try {
     // }
 
     /** Authentication */
-    $user = User::authentication();
+    $user = User::user();
     if(!$user) {
         JsonResponse([
             'code'      => 403,
