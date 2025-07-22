@@ -117,8 +117,17 @@ if(!$saveToken) {
     ]);
 }
 
-/** Set Token to Cookie */
-User::setAuthData(['access_token' => $accessToken, 'refresh_token' => $refreshToken]);
+/** Set Auth Data */
+$authData = [
+    'access_token' => $accessToken, 
+    'refresh_token' => $refreshToken
+];
+
+if(isset($data['remember'])) {
+    $authData['remember_me'] = true;
+}
+
+User::setAuthData($authData);
 Logger::client_log([
     'mbrid' => $userData['MBR_ID'],
     'module' => "signin",
