@@ -22,7 +22,13 @@ class UserAuth {
         $_SESSION['refresh_token'] = $data['refresh_token'];
 
         if(!empty($data['remember_me'])) {
-            setcookie('remember_token', $data['refresh_token'], time() + (60 * 60 * 24 * 30), "/");
+            setcookie('remember_token', $data['refresh_token'], [
+                'expires' => time() + (60 * 60 * 24 * 30),
+                'path' => "/",
+                'secure' => true,
+                'httponly' => true,
+                'sameSite' => "None"
+            ]);
         }
 
         return true;
@@ -115,7 +121,7 @@ class UserAuth {
 
     public function logout() {
         session_destroy();
-        session_regenerate_id();
+        SystemInfo::refreshSession();
         return true;
     }
 }
