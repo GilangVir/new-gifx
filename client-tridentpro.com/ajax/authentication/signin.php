@@ -118,9 +118,7 @@ if(!$saveToken) {
 }
 
 /** Set Token to Cookie */
-setcookie("access_token", $accessToken, time() + ACCESS_TOKEN_LIFETIME, "/");
-setcookie("refresh_token", $refreshToken, time() + REFRESH_TOKEN_LIFETIME, "/");
-
+User::setAuthData(['access_token' => $accessToken, 'refresh_token' => $refreshToken]);
 Logger::client_log([
     'mbrid' => $userData['MBR_ID'],
     'module' => "signin",
