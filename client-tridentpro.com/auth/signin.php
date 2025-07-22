@@ -2,7 +2,7 @@
 
 use App\Models\User;
 
-$isLoggedIn = User::authentication();
+$isLoggedIn = User::user();
 if($isLoggedIn) {
     die("<script>location.href = '/dashboard';</script>");
 }
