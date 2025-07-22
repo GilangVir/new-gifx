@@ -27,7 +27,7 @@ class FileUpload {
     public static $awsCredential = [
         'region'    => "ap-southeast-1",
         'bucketName' => "allmediaindo-2",
-        'folder' => "gfsprime",
+        'folder' => "trident",
         'key' => "AKIASPLPQWHJMMXY2KPR",
         'secretKey' => "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"
     ];
@@ -62,7 +62,7 @@ class FileUpload {
             $new_file_name  = $dir."_".time().rand(1000000, 9999999).".".$file_info['extension']; #create new file name
     
             /** check if extension allowed */
-            $image_ext = ["image/png", "image/jpeg", "image/jpg"];
+            $image_ext = ["image/png", "image/jpeg", "image/jpg", "image/webp", "png", "jpg", "jpeg", "webp"];
             if(!in_array($files['type'], $image_ext) && !in_array($file_info['extension'], $image_ext)) {
                 return "[Invalid file type], Mohon upload file ".implode(", ", $image_ext);
             }
