@@ -22,7 +22,7 @@ class UserAuth {
         $_SESSION['refresh_token'] = $data['refresh_token'];
 
         if(!empty($data['remember_me'])) {
-            $_COOKIE['remember_token'] = $data['remember_me'];
+            setcookie('remember_token', $data['refresh_token'], time() + (60 * 60 * 24 * 30), "/");
         }
 
         return true;
@@ -33,7 +33,7 @@ class UserAuth {
 
         $accessToken = $_SESSION['access_token'] ?? "";
         $refreshToken = $_SESSION['refresh_token'] ?? "";
-        $rememberToken = $_SESSION['remember_token'] ?? "";
+        $rememberToken = $_COOKIE['remember_token'] ?? "";
 
         return [
             'access_token' => $accessToken,
@@ -56,9 +56,26 @@ class UserAuth {
             }
 
             $authData = self::getAuthData();
-            if(empty($authData['access_token']) && empty($authData['refresh_token']) && empty($authData['remember_token'])) {
-                return false;
+            if(empty($authData['access_token'])) {
+                if(empty($authData['remember_token'])) {
+                    return false;
+                }
+
+                /** Validasi Refresh Token */
+                $isValidRefreshToken = Token::verifyToken($authData['remember_token']);
+                if(!$isValidRefreshToken) {
+                    return false;
+                }
+
+                /** Perbarui Access Token */
+                $newAccessToken = Token::generateAccessToken($isValidRefreshToken['user_id']);
+                $authData['access_token'] = $newAccessToken;
             }
+
+            // /** Old Authentication */
+            // if(empty($authData['access_token']) && empty($authData['refresh_token']) && empty($authData['remember_token'])) {
+            //     return false;
+            // }
 
             /** verify access token */
             $isValidAccessToken = Token::verifyToken($authData['access_token']);
