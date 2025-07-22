@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use Config\Core\Database;
+use Config\Core\SystemInfo;
 use Config\Core\UserAuth;
 use Exception;
 
@@ -158,7 +159,27 @@ class User extends UserAuth {
                 : false;
 
         } catch (Exception $e) {
-            if(ini_get("display_errors") == "1") {
+            if(SystemInfo::isDevelopment()) {
+                throw $e;
+            }
+
+            return false;
+        }
+    }
+
+    public static function isVerified(int $mbrid) {
+        try {
+            $db = DBHelper::getConnection();
+            $sqlGet = $db->query("SELECT * FROM tb_member_file WHERE MBRFILE_MBR = {$mbrid}");
+            if($sqlGet->num_rows != 1) {
+                return false;
+            }
+
+            $detail = $sqlGet->fetch_assoc() ?? false;
+            return $detail;
+
+        } catch (Exception $e) {
+            if(SystemInfo::isDevelopment()) {
                 throw $e;
             }
 
