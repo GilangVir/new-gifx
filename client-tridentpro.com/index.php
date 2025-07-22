@@ -30,28 +30,11 @@ if(empty($authPage)) {
     <link rel="stylesheet" href="/assets/vendor/css/OverlayScrollbars.min.css">
     <link rel="stylesheet" href="/assets/vendor/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/custom.css">
     <link rel="stylesheet" id="primaryColor" href="/assets/css/blue-color.css">
     <link rel="stylesheet" id="rtlStyle" href="#">
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
-        .img_logo{
-            width: 100%; /* or max-width: 100%; */
-            height: auto;
-        }
-        
-        /* Chrome, Safari, Edge, Opera */
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-        /* Firefox */
-        input[type=number] {
-            -moz-appearance: textfield;
-        }
-    </style>
 </head>
 <body class="dark-theme">
 

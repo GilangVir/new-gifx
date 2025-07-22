@@ -53,6 +53,7 @@ $userid = md5(md5($user['MBR_ID'])) ?? "";
         <link rel="stylesheet" href="/assets/vendor/css/sweetalert2.min.css">
         <link rel="stylesheet" href="/assets/vendor/css/bootstrap.min.css">
         <link rel="stylesheet" href="/assets/css/style.css">
+        <link rel="stylesheet" href="/assets/css/custom.css">
 
         <link rel="stylesheet" id="primaryColor" href="/assets/css/blue-color.css">
         <link rel="stylesheet" id="rtlStyle" href="#">
@@ -62,34 +63,6 @@ $userid = md5(md5($user['MBR_ID'])) ?? "";
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js" integrity="sha512-8QFTrG0oeOiyWo/VM9Y8kgxdlCryqhIxVeRpWSezdRRAvarxVtwLnGroJgnVW9/XBRduxO/z1GblzPrMQoeuew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://sdk.amazonaws.com/js/aws-sdk-2.179.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <style>
-            .input-group-a {
-                position: relative;
-                display: contents;
-                /* flex-wrap: wrap; */
-                /* align-items: stretch; */
-                width: 100%;
-            }
-
-            /* Chrome, Safari, Edge, Opera */
-            input::-webkit-outer-spin-button,
-            input::-webkit-inner-spin-button {
-                -webkit-appearance: none;
-                margin: 0;
-            }
-
-            /* Firefox */
-            input[type=number] {
-                -moz-appearance: textfield;
-            }
-        </style>
-        
-        <style>
-            .dataTables_length select {
-                color: white !important;
-                background-color: #242526 !important;
-            }
-        </style>
     </head>
 
     <body class="body-padding body-p-top light-theme">
