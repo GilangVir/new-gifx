@@ -44,6 +44,7 @@ try {
         ]);
     }
     
+    $userid = md5(md5($user['MBR_ID']));
     $avatar = User::avatar($user['MBR_AVATAR']);
     require_once $fileUrl;
 
