@@ -11,6 +11,11 @@ if(!empty($_GET["a"])){
     $pageTitle = ucwords(strtolower(str_replace('-', ' ', $pageFile)));
 }
 
+if($pageFile == "logout") {
+    User::logout();
+    die("<script>location.href ='/'</script>"); 
+}
+
 $user = User::user();
 if(!$user) {
     die("<script>alert('Session Expired, please re-login'); location.href ='/'</script>"); 
