@@ -101,6 +101,7 @@ $userid = md5(md5($user['MBR_ID'])) ?? "";
         <script src="/assets/vendor/js/sweetalert2.all.min.js"></script>
         <script src="/assets/vendor/js/bootstrap.bundle.min.js"></script>
         <script src="/assets/js/main.js?v=<?= time(); ?>"></script>
+        <script src="/assets/js/custom.js"></script>
         <script src="/assets/js/select2-init.js?dt=<?php echo rand(1,100) . time(); ?>"></script>
         <script>
             if ('serviceWorker' in navigator) {
