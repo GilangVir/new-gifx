@@ -91,7 +91,6 @@ $userid = md5(md5($user['MBR_ID'])) ?? "";
         <?php require_once __DIR__ . "/template/header.php"; ?>
         <?php require_once __DIR__ . "/template/sidebar.php"; ?>
         <?php require_once __DIR__ . "/template/content.php"; ?>
-        <?php require_once __DIR__ . "/template/footer.php"; ?>
 
         <script src="/assets/vendor/js/jquery-ui.min.js"></script>
         <script src="/assets/vendor/js/jquery.overlayScrollbars.min.js"></script>
