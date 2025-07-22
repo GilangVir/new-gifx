@@ -186,4 +186,47 @@ class User extends UserAuth {
             return false;
         }
     }
+
+    public static function setResetPasswordCode(int $mbrid, string $code) {
+        try {
+            $expired = date("Y-m-d H:i:s", strtotime("+10 minute"));
+            $update = DBHelper::update("tb_member", ['MBR_RESET_CODE' => $code, 'MBR_RESET_EXPIRED' => $expired], ['MBR_ID' => $mbrid]);
+            if(!$update) {
+                return false;
+            }
+
+            return true;
+
+        } catch (Exception $e) {
+            if(SystemInfo::isDevelopment()) {
+                throw $e;
+            }
+
+            return false;
+        }
+    }
+
+    public static function verifyResetCode(string $code) {
+        try {
+            $db = DBHelper::getConnection();
+            $sqlGet = $db->query("SELECT MBR_ID, MBR_EMAIL, MBR_RESET_EXPIRED FROM tb_member WHERE MBR_RESET_CODE = '{$code}' LIMIT 1");
+            if($sqlGet->num_rows != 1) {
+                return false;
+            }
+
+            $userData = $sqlGet->fetch_assoc();
+            if(time() >= strtotime($userData['MBR_RESET_EXPIRED'] ?? "now")) {
+                return false;
+            }
+
+            return $userData['MBR_ID'];
+
+        } catch (Exception $e) {
+            if(SystemInfo::isDevelopment()) {
+                throw $e;
+            }
+
+            return false;
+        }
+    }
 }
