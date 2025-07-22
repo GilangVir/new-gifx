@@ -119,9 +119,12 @@ class UserAuth {
         }
     }
 
-    public function logout() {
+    public static function logout() {
         session_destroy();
-        SystemInfo::refreshSession();
+        if(isset($_COOKIE['remember_token'])) {
+            setcookie('remember_token', "", time());
+        }
+
         return true;
     }
 }
