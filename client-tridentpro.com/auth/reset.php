@@ -27,13 +27,16 @@ if(!$isValidCode){
                 <input type="hidden" name="code" value="<?= $code ?>">
                 <div class="input-group mb-25">
                     <span class="input-group-text"><i class="fa-regular fa-lock"></i></span>
-                    <input type="password" required name="password" class="form-control" placeholder="New password">
-                </div>
+                    <input type="password" required name="password" class="form-control" autocomplete="off" placeholder="New password">
+					<a role="button" class="password-show"><i class="fa-duotone fa-eye"></i></a>
+				</div>
 
                 <div class="input-group mb-25">
                     <span class="input-group-text"><i class="fa-regular fa-lock"></i></span>
-                    <input type="password" required name="password_confirm" class="form-control" placeholder="Confirm the new password">
-                </div>
+                    <input type="password" required name="password_confirm" class="form-control" autocomplete="off" placeholder="Confirm the new password">
+					<a role="button" class="password-show"><i class="fa-duotone fa-eye"></i></a>
+				</div>
+
                 <button type="submit" class="btn btn-primary w-100 login-btn">Reset</button>
             </form>
         </div>
