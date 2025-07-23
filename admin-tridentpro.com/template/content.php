@@ -7,8 +7,8 @@
             <?php if(!$filePermission) : ?>
                 <?php require_once __DIR__ . "/403.php";  ?>
 
-            <?php elseif(file_exists($filePermission['filepath'])) : ?>
-                <?php require_once $filePermission['filepath']; ?>
+            <?php elseif(file_exists(CRM_ROOT . $filePermission['filepath'])) : ?>
+                <?php require_once CRM_ROOT . $filePermission['filepath']; ?>
                 
             <?php else : ?>
                 <?= SystemInfo::isDevelopment()? ("Unknown Path: " . $filePermission['filepath']) : "";  ?>
