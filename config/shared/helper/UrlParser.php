@@ -8,14 +8,17 @@ class UrlParser {
             return $default;
         }
 
-        if(count($data) < 2) {
-            $data[] = "index";
-        }
-
+        $result = [];
         foreach($data as $key => $val) {
-            $data[$key] = filter_var(strtolower($val), FILTER_SANITIZE_URL);
+            if(!empty($val)) {
+                $result[] = filter_var(strtolower($val), FILTER_SANITIZE_URL);
+            }
         }
 
-        return implode("/", $data);
+        if(count($result) < 2) {
+            $result[] = $default;
+        }
+
+        return implode("/", $result);
     }
 }
