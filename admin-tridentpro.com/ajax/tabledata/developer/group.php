@@ -14,15 +14,13 @@ $dt->edit("icon", function($col) {
 });
 
 $dt->edit("id_hash", function($col) {
-    $buttonEdit = '<a class="btn btn-success btn-sm text-white btn-edit" data-id="'.$col['id_hash'].'" data-group="'.$col['groupName'].'" data-type="'.$col['type'].'" data-icon="'.$col['icon'].'"><i class="fas fa-edit"></i></a>';
-    $buttonDelete = '<a class="btn btn-danger btn-sm text-white btn-delete" data-id="'.$col['id_hash'].'"><i class="fas fa-trash"></i></a>';
-    
-    return '
-        <div class="text-center">
-            '.(checkPermission("/developer/group/update", $buttonEdit)).'
-            '.(checkPermission("/developer/group/delete", $buttonDelete)).'
-        </div>
-    ';
+    $dataEncode = base64_encode(json_encode([
+        'group' => $col['groupName'],
+        'type' => $col['type'],
+        'icon' => $col['icon'],
+    ]));
+
+    return '<div class="action text-center" data-id="'.$col['id_hash'].'" data-other="'.$dataEncode.'"></div>';
 });
 
 echo $dt->generate()->toJson();
