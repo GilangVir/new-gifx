@@ -3,8 +3,9 @@ use App\Models\Admin;
 use App\Models\Helper;
 use App\Models\Database;
 use App\Models\DBHelper;
+use App\Shared\AdminPermission\Core\AdminPermissionCore;
 
-$permission = Admin::hasPermission($authorizedPermission, $url);
+$permission = AdminPermissionCore::hasPermission($authorizedPermission, $url);
 if(!$permission) {
     JsonResponse([
         'code'      => 200,
