@@ -4,6 +4,7 @@ use Ozdemir\Datatables\Datatables;
 use Ozdemir\Datatables\DB\MySQL;
 use App\Models\Admin;
 use App\Shared\AdminPermission\Core\AdminPermissionCore;
+use App\Shared\Helper\UrlParser;
 use Config\Core\Database;
 
 try {
@@ -61,6 +62,7 @@ try {
     }
 
     $fileUrl = str_replace("/view", "", $permission['fileurl']);
+    $fileUrl = UrlParser::urlToPath(explode("/", $fileUrl), "view");
     if(!file_exists(__DIR__ . "/tabledata/{$fileUrl}.php")) {
         JsonResponse([
             'code'      => 404,
