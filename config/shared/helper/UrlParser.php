@@ -1,5 +1,5 @@
 <?php
-namespace App\Shared;
+namespace App\Shared\Helper;
 
 class UrlParser {
 
