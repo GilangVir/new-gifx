@@ -4,6 +4,7 @@ use App\Models\Helper;
 use App\Models\Admin;
 use App\Models\CompanyProfile;
 use App\Models\DBHelper;
+use App\Shared\AdminPermission\Core\AdminPermissionCore;
 
 $queryParam = Helper::getSafeInput($_GET);
 $page = $queryParam['a'] ?? "";
@@ -23,8 +24,8 @@ $newExpired = date("Y-m-d H:i:s", strtotime("+1 hour"));
 DBHelper::update("tb_admin", ['ADM_TOKEN_EXPIRED' => $newExpired], ['ADM_ID' => $user['ADM_ID']]);
 
 /** Permission */
-$getAuthrorizedPermissions = Admin::getAuthrorizedPermissions($user['ID_ADM']);
-$filePermission = Admin::hasPermission($getAuthrorizedPermissions);
+$getAuthrorizedPermissions = AdminPermissionCore::getAuthrorizedPermissions($user['ID_ADM']);
+$filePermission = AdminPermissionCore::hasPermission($getAuthrorizedPermissions);
 ?>
 <!DOCTYPE html>
 <html lang="en">
