@@ -2,8 +2,8 @@
 require_once __DIR__ . "/../../config/setting.php";
 use Ozdemir\Datatables\Datatables;
 use Ozdemir\Datatables\DB\MySQL;
-use App\Models\Helper;
 use App\Models\Admin;
+use App\Shared\AdminPermission\Core\AdminPermissionCore;
 use Config\Core\Database;
 
 try {
@@ -31,10 +31,10 @@ try {
     }
 
     /** Admin Permission */
-    $authorizedPermission = Admin::getAuthrorizedPermissions($user['ID_ADM']);
+    $authorizedPermission = AdminPermissionCore::getAuthrorizedPermissions($user['ID_ADM']);
     $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $url = str_replace("/ajax/datatable", "", $requestUri);
-    $permission = Admin::hasPermission($authorizedPermission, $url);
+    $permission = AdminPermissionCore::hasPermission($authorizedPermission, $url);
     if(empty($_SERVER['HTTP_REFERER'])) {
         JsonResponse([
             'code'      => 404,
@@ -46,7 +46,7 @@ try {
 
     function checkPermission(string $permission, string $onTrue, string $onFalse = "") {
         global $authorizedPermission;
-        return (Admin::hasPermission($authorizedPermission, $permission))? $onTrue : $onFalse;
+        return (AdminPermissionCore::hasPermission($authorizedPermission, $permission))? $onTrue : $onFalse;
     }
 
 

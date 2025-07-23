@@ -2,7 +2,7 @@
 <div class="main-content">
     <?php
     use App\Models\Helper;
-use App\Shared\UrlParser;
+    use App\Shared\Helper\UrlParser;
 
     switch($pageFile) {
         case "verif": 

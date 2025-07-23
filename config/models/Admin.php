@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use Config\Core\AdminAuth;
+use Config\Core\SystemInfo;
 use Exception;
 
 class Admin extends AdminAuth {
@@ -39,7 +40,7 @@ class Admin extends AdminAuth {
             return $user;
 
         } catch (Exception $e) {
-            if(ini_get("display_errors") == "1") {
+            if(SystemInfo::isDevelopment()) {
                 throw $e;
             }
 
@@ -64,47 +65,5 @@ class Admin extends AdminAuth {
         }
     }
 
-    public static function findModuleById(string $id) {
-        try {
-            $db = DBHelper::getConnection();
-            $sqlGet = $db->query("
-                SELECT 
-                	am.*,
-                    amg.`group`
-                FROM admin_module am
-                JOIN admin_module_group amg ON (amg.id = am.group_id)
-                WHERE MD5(MD5(am.id)) = '{$id}' 
-                LIMIT 1
-            ");
-
-            if($sqlGet->num_rows != 1) {
-                return false;
-            }
-
-            return $sqlGet->fetch_assoc();
-
-        } catch (Exception $e) {
-            if(ini_get("display_errors") == "1") {
-                throw $e;
-            }
-
-            return [];
-        }
-    }
-
-    public static function maxGroupId() {
-        try {
-            global $db;
-            if(empty($db)) {
-                $db = DBHelper::getConnection();
-            }
-            
-            $sqlGet = $db->query("SELECT MAX(id) as id FROM admin_module_group LIMIT 1");
-            
-            return $sqlGet->fetch_assoc()['id'] ?? 0;
-
-        } catch (Exception $e) {
-            return 0;
-        }
-    }
+    
 }

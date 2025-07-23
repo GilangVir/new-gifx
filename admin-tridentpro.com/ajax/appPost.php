@@ -2,6 +2,7 @@
 require_once __DIR__ . "/../../config/setting.php";
 require_once CONFIG_ROOT . "/vendor/autoload.php";
 use App\Models\Admin;
+use App\Shared\AdminPermission\Core\AdminPermissionCore;
 use Config\Core\Database;
 
 try {
@@ -39,7 +40,7 @@ try {
         ]);
     }
 
-    $authorizedPermission = Admin::getAuthrorizedPermissions($user['ID_ADM']);
+    $authorizedPermission = AdminPermissionCore::getAuthrorizedPermissions($user['ID_ADM']);
     $url = str_replace("/postdata", "", $requestUri);
     require_once $fileUrl;
 

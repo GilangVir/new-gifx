@@ -27,11 +27,45 @@ class PermissionModule {
             return $sqlGet->fetch_assoc();
 
         } catch (Exception $e) {
-            if(ini_get("display_errors") == "1") {
+            if(SystemInfo::isDevelopment()) {
                 throw $e;
             }
 
             return [];
+        }
+    }
+
+    public static function findPermissionByModuleId(int $id) {
+        try {
+            $db = DBHelper::getConnection();
+            $sqlGet = $db->query("SELECT * FROM admin_permissions WHERE module_id = {$id}");
+            return $sqlGet->fetch_all(MYSQLI_ASSOC) ?? [];
+
+        } catch (Exception $e) {
+            if(SystemInfo::isDevelopment()) {
+                throw $e;
+            }
+
+            return [];
+        }
+    }
+
+    public static function findPermissionById(int $id) {
+        try {
+            $db = DBHelper::getConnection();
+            $sqlGet = $db->query("SELECT * FROM admin_permissions WHERE id = {$id} LIMIT 1");
+            if($sqlGet->num_rows != 1) {
+                return false;
+            }
+
+            return $sqlGet->fetch_assoc() ?? false;
+
+        } catch (Exception $e) {
+            if(SystemInfo::isDevelopment()) {
+                throw $e;
+            }
+
+            return false;
         }
     }
 }
