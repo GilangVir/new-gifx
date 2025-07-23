@@ -263,11 +263,12 @@ $(function () {
 				const el = mutation.target;
 				let isLoading = el.classList.contains('loading')
 				if(isLoading) {
+					el.dataset.originalText = el.textContent;
 					el.textContent = "Loading...";
-					el.setAttribute('disabled', 'true')
+					el.setAttribute('disabled', 'true');
 				}else {
-					el.textContent = el.dataset.originalText
-					el.removeAttribute('disabled')
+					el.textContent = el.dataset.originalText;
+					el.removeAttribute('disabled');
 				}
 			}
 		}
