@@ -1,14 +1,13 @@
 <?php
 
-use Config\Core\Database;
+use App\Models\DBHelper;
 
 require_once __DIR__ . "/../../config/setting.php";
 require_once CONFIG_ROOT . "/vendor/autoload.php";
 
 
 try {
-    $db = Database::getConnection();
-
+    $db = DBHelper::getConnection();
     $parseUrl = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $requestUri = str_replace(['\*', '/ajax', '/auth'], ['', '', '/authentication'], $parseUrl);
     $fileUrl = __DIR__ . $requestUri . ".php";
