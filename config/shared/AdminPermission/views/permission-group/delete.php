@@ -7,7 +7,6 @@
                     $.each($('#table-group tbody tr'), (i, tr) => {
                         let td = $(tr).find('td').eq(2);
                         if(td) {
-                            console.log(td)
                             let actionArea = td.find('.action');
                             if(actionArea && !actionArea.find('.btn-delete').length) {
                                 let id = actionArea.data('id');
