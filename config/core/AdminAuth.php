@@ -1,6 +1,7 @@
 <?php 
 namespace Config\Core;
 
+use App\Shared\UrlParser;
 use Exception;
 
 class AdminAuth {
@@ -302,7 +303,8 @@ class AdminAuth {
 
                         if(preg_match($regex, $requestUri)) {
                             $perm['module_id'] = $module['id'];
-                            $perm['fileurl'] = str_replace("/^[a-zA-Z0-9\-]+$/", "", $pattern1);
+                            $patternReplace = str_replace("/^[a-zA-Z0-9\-]+$/", "", $pattern1);
+                            $perm['fileurl'] = CRM_ROOT . "/" . UrlParser::urlToPath(explode("/", $patternReplace), "view");
                             $permission = $perm;
                             break;
                         }
