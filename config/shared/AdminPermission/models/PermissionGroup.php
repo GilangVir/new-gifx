@@ -22,4 +22,19 @@ class PermissionGroup {
         }
     }
 
+    public static function maxGroupId() {
+        try {
+            global $db;
+            if(empty($db)) {
+                $db = DBHelper::getConnection();
+            }
+            
+            $sqlGet = $db->query("SELECT MAX(id) as id FROM admin_module_group LIMIT 1");
+            
+            return $sqlGet->fetch_assoc()['id'] ?? 0;
+
+        } catch (Exception $e) {
+            return 0;
+        }
+    }
 }
