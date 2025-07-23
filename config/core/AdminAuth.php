@@ -304,7 +304,7 @@ class AdminAuth {
                         if(preg_match($regex, $requestUri)) {
                             $perm['module_id'] = $module['id'];
                             $patternReplace = str_replace("/^[a-zA-Z0-9\-]+$/", "", $pattern1);
-                            $perm['fileurl'] = CRM_ROOT . "/" . UrlParser::urlToPath(explode("/", $patternReplace), "view");
+                            $perm['fileurl'] = "/" . UrlParser::urlToPath(explode("/", $patternReplace), "view");
                             $permission = $perm;
                             break;
                         }
@@ -321,7 +321,7 @@ class AdminAuth {
             }
 
             $filepath = CRM_ROOT."/doc";
-            $filepath .= str_replace(["/.*", "\\"], ["", ""], $pattern2);
+            $filepath .= $permission['fileurl'];
             $filepath .= ".php";
 
             return array_merge($permission, ['filepath' => $filepath]);
