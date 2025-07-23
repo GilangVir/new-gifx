@@ -1,7 +1,7 @@
 <?php
-use App\Models\Admin;
 use App\Models\Helper;
 use App\Models\DBHelper;
+use App\Shared\AdminPermission\Models\PermissionGroup;
 
 if(!$isAllowed) {
     JsonResponse([
@@ -25,7 +25,7 @@ foreach(['group_name', 'group_type', 'group_icon'] as $req) {
 }
 
 /** Get Max ID */
-$order = Admin::maxGroupId();
+$order = PermissionGroup::maxGroupId();
 if($order == 0) {
     JsonResponse([
         'code'      => 200,
