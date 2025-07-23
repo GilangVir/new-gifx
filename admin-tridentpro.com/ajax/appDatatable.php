@@ -1,8 +1,4 @@
 <?php
-if(session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
 require_once __DIR__ . "/../../config/setting.php";
 use Ozdemir\Datatables\Datatables;
 use Ozdemir\Datatables\DB\MySQL;
@@ -46,6 +42,11 @@ try {
             'message'   => "Invalid Request",
             'data'      => []
         ]);
+    }
+
+    function checkPermission(string $permission, string $onTrue, string $onFalse = "") {
+        global $authorizedPermission;
+        return (Admin::hasPermission($authorizedPermission, $permission))? $onTrue : $onFalse;
     }
 
 
