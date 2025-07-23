@@ -2,6 +2,7 @@
 namespace App\Shared\AdminPermission;
 
 use App\Shared\InterfaceSharedView;
+use Config\Core\SystemInfo;
 use Throwable;
 
 class SharedViews implements InterfaceSharedView {
@@ -14,8 +15,21 @@ class SharedViews implements InterfaceSharedView {
             include __DIR__ . "/views/$filepath.php";
 
         } catch (Throwable $e) {
-            ob_get_clean();
-            throw $e;
+            if(SystemInfo::isDevelopment()) {
+                throw $e;
+            }
         }
-    } 
+    }
+
+    public static function render_script(string $filepath, array $data = []) {
+        try {
+            extract($data, EXTR_SKIP);
+            include __DIR__ . "/views/$filepath.php";
+
+        } catch (Throwable $e) {
+            if(SystemInfo::isDevelopment()) {
+                throw $e;
+            }
+        }
+    }
 }

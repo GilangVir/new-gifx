@@ -9,65 +9,13 @@
 </div>
 
 <div class="row">
-    <?php require_once __DIR__ . "/create.php"; ?>
-
+    <div class="col-md-4 mb-3">
+        <?php App\Shared\AdminPermission\SharedViews::render("permission-group/create", ['filePermission' => $filePermission]); ?>
+    </div>
     <div class="col mb-3">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title text-priamry">Daftar Grup</h5>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-hover table-bordered" id="table-group">
-                        <thead>
-                            <tr>
-                                <th>Nama</th>
-                                <th width="10%">Icon</th>
-                                <th width="10%">#</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        <?php App\Shared\AdminPermission\SharedViews::render("permission-group/tabledata", ['filePermission' => $filePermission]); ?>
     </div>
 </div>
 
-<?php require_once __DIR__ . "/update.php"; ?>
-
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#table-group').DataTable({
-            processing: true,
-            serverSide: true,
-            order: [[0, 'desc']],
-            ajax: {
-                url: "/ajax/datatable/developer/group/view",
-            },
-            drawCallback: function() {
-                $('.btn-edit').on('click', function(evt) {
-                    if(evt.currentTarget) {
-                        $('#modal-edit-group').find('#edit_group_id').val( $(evt.currentTarget).data('id') )
-                        $('#modal-edit-group').find('#edit_group_name').val( $(evt.currentTarget).data('group') )
-                        $('#modal-edit-group').find('#edit_group_type').val( $(evt.currentTarget).data('type') )
-                        $('#modal-edit-group').find('#edit_group_icon').val( $(evt.currentTarget).data('icon') )
-                        $('#modal-edit-group').modal('show');
-                    }
-                })
-
-                $('.btn-delete').on('click', function(evt) {
-                    if(evt.currentTarget) {
-                        $.post("/ajax/post/developer/group/delete", {id: $(evt.currentTarget).data('id')}, (resp) => {
-                            Swal.fire(resp.alert).then(() => {
-                                if(resp.success) {
-                                    location.reload();
-                                }
-                            })
-                        }, 'json')
-                    }
-                })
-            }
-        })
-    })
-</script>
+<?php App\Shared\AdminPermission\SharedViews::render("permission-group/update", ['filePermission' => $filePermission]); ?>
+<?php App\Shared\AdminPermission\SharedViews::render("permission-group/delete", ['filePermission' => $filePermission]); ?>

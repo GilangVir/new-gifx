@@ -10,7 +10,7 @@
         "psr-4": {
             "Config\\Core\\": "core/",
             "App\\Models\\": "models/",
-            "App\\Shared\\": ["shared/", "shared/models/", "shared/helper/"]
+            "App\\Shared\\": "shared/"
         }
     },
     "authors": [
