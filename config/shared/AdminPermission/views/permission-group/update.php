@@ -48,7 +48,7 @@
                                 let id = actionArea.data('id');
                                 let data = actionArea.data('other');
                                 data = JSON.parse(atob(data));
-                                actionArea.append(`<a class="btn btn-success btn-sm text-white btn-edit" data-id="${id}" data-group="${data.group}" data-type="${data.type}" data-icon="${data.icon}"><i class="fas fa-trash"></i></a>`)
+                                actionArea.append(`<a class="btn btn-success btn-sm text-white btn-edit me-1" data-id="${id}" data-group="${data.group}" data-type="${data.type}" data-icon="${data.icon}"><i class="fas fa-edit"></i></a>`)
                             }
                         }
                     })
