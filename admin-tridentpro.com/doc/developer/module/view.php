@@ -8,12 +8,11 @@
 	</div>
 </div>
 
-<div class="row">
-    <?php App\Shared\AdminPermission\SharedViews::render("permission-module/create", ['filePermission' => $filePermission]); ?>
-    <div class="col mb-3">
-        <?php App\Shared\AdminPermission\SharedViews::render("permission-module/tabledata", ['filePermission' => $filePermission]); ?>
-    </div>
-</div>
-
-<?php App\Shared\AdminPermission\SharedViews::render("permission-module/update_button", ['filePermission' => $filePermission]); ?>
-<?php App\Shared\AdminPermission\SharedViews::render("permission-module/delete", ['filePermission' => $filePermission]); ?>
+<?php 
+Allmedia\Shared\AdminPermission\SharedViews::render("permission-module/view", [
+	'isAllowToCreate' => $adminPermissionCore->isHavePermission($moduleId, "create"),
+	'isAllowToUpdate' => $adminPermissionCore->isHavePermission($moduleId, "update"),
+	'isAllowToDelete' => $adminPermissionCore->isHavePermission($moduleId, "delete"),
+	'availableGroups' => $adminPermissionCore->availableGroup(),
+]); 
+?>
