@@ -12,7 +12,7 @@ class User extends UserAuth {
         try {
             global $db;
             if(empty($db)) {
-                $db = Database::getConnection();
+                $db = Database::connect();
             }
 
             $select = $db->query("SELECT UNIX_TIMESTAMP(NOW())+(SELECT IFNULL(MAX(tb.ID_MBR),0) FROM tb_member tb) as ID");
@@ -31,7 +31,7 @@ class User extends UserAuth {
                 return false;
             }
     
-            $db = Database::getConnection();
+            $db = Database::connect();
             $sqlGet = $db->query("SELECT * FROM tb_member WHERE MBR_ID = {$userid} LIMIT 1");
             if($sqlGet->num_rows != 1) {
                 return false;

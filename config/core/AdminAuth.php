@@ -43,7 +43,7 @@ class AdminAuth {
         try {
             global $db, $_SESSION, $_COOKIE;
             if(empty($db)) {
-                $db = Database::getConnection();
+                $db = Database::connect();
             }
             
             $authData = self::getSessionData();

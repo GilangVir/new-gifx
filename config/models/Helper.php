@@ -234,7 +234,7 @@ class Helper {
     public static function checkRate($fromCurr, $toCurr): array {
         try {
             /** Check database apakah ada */
-            $db = Database::getConnection();
+            $db = Database::connect();
             $sqlGetRate = $db->query("SELECT * FROM tb_rate WHERE RATE_FROM = '{$fromCurr}' AND RATE_TO = '{$toCurr}' LIMIT 1");
             if($sqlGetRate->num_rows != 1) {
                 return [];
