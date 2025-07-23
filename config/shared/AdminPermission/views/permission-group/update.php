@@ -39,8 +39,21 @@
     <script type="text/javascript">
         $(document).ready(function() {
             if(table) {
-                table.on('draw.dt', function(evt) {
-                    $('.btn-edit').on('click', function(evt) {
+                table.on('draw.dt', async function(evt) {
+                    await $.each($('#table-group tbody tr'), (i, tr) => {
+                        let td = $(tr).find('td').eq(2);
+                        if(td) {
+                            let actionArea = td.find('.action');
+                            if(actionArea && !actionArea.find('.btn-edit').length) {
+                                let id = actionArea.data('id');
+                                let data = actionArea.data('other');
+                                data = JSON.parse(atob(data));
+                                actionArea.append(`<a class="btn btn-success btn-sm text-white btn-edit" data-id="${id}" data-group="${data.group}" data-type="${data.type}" data-icon="${data.icon}"><i class="fas fa-trash"></i></a>`)
+                            }
+                        }
+                    })
+
+                    await $('.btn-edit').on('click', function(evt) {
                         if(evt.currentTarget) {
                             $('#modal-edit-group').find('#edit_group_id').val( $(evt.currentTarget).data('id') )
                             $('#modal-edit-group').find('#edit_group_name').val( $(evt.currentTarget).data('group') )
@@ -50,6 +63,7 @@
                         }
                     })
                 })
+
                 
                 $('#update-group').on('submit', function(event) {
                     event.preventDefault();
