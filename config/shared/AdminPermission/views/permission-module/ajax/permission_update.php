@@ -45,9 +45,9 @@ if(is_numeric($data['permission_id']) === FALSE) {
     ]);
 }
 
-$sqlGetPermission = $db->query("SELECT * FROM admin_permissions WHERE id = ".$data['permission_id']." LIMIT 1");
-$permission = $sqlGetPermission->fetch_assoc();
-if($sqlGetPermission->num_rows != 1) {
+/** Check ID */
+$permission = PermissionModule::findPermissionById($data['permission_id']);
+if(!$permission) {
     JsonResponse([
         'success' => false,
         'message' => "Permission ID tidak ditemukan",
