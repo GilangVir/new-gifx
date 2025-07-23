@@ -18,3 +18,4 @@
 </div>
 
 <?php App\Shared\AdminPermission\SharedViews::render("permission-group/update", ['filePermission' => $filePermission]); ?>
+<?php App\Shared\AdminPermission\SharedViews::render("permission-group/delete", ['filePermission' => $filePermission]); ?>
