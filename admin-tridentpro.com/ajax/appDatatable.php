@@ -3,7 +3,7 @@ require_once __DIR__ . "/../../config/setting.php";
 use Ozdemir\Datatables\Datatables;
 use Ozdemir\Datatables\DB\MySQL;
 use App\Models\Admin;
-use App\Shared\AdminPermission\Core\AdminPermissionCore;
+use Allmedia\Shared\AdminPermission\Core\AdminPermissionCore;
 use App\Shared\Helper\UrlParser;
 use Config\Core\Database;
 

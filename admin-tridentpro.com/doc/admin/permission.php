@@ -1,7 +1,7 @@
 <?php 
 use App\Models\Helper;
 use App\Models\Admin;
-use App\Shared\AdminPermission\Core\AdminPermissionCore;
+use Allmedia\Shared\AdminPermission\Core\AdminPermissionCore;
 
 try {
     $idAdmin = Helper::form_input($_GET['d'] ?? "me");

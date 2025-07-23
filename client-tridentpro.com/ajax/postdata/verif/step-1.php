@@ -3,7 +3,7 @@
 /** Required fullname */
 
 use App\Models\Country;
-use App\Models\DBHelper;
+use Config\Core\Database;
 use App\Models\Helper;
 use App\Models\Logger;
 
@@ -55,7 +55,7 @@ $updateData = [
     'MBR_VERIF' => 2
 ];
 
-$update = DBHelper::update("tb_member", $updateData, ['MBR_ID' => $user['MBR_ID']]);
+$update = Database::update("tb_member", $updateData, ['MBR_ID' => $user['MBR_ID']]);
 if(!$update) {
     JsonResponse([
         'success' => false,

@@ -2,7 +2,7 @@
 require_once __DIR__ . "/../../config/setting.php";
 require_once CONFIG_ROOT . "/vendor/autoload.php";
 use App\Models\Admin;
-use App\Shared\AdminPermission\Core\AdminPermissionCore;
+use Allmedia\Shared\AdminPermission\Core\AdminPermissionCore;
 use Config\Core\Database;
 
 try {

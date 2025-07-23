@@ -2,7 +2,7 @@
 
 use App\Models\Country;
 use App\Models\Helper;
-use App\Models\DBHelper;
+use Config\Core\Database;
 use App\Models\Logger;
 use App\Models\User;
 use App\Shared\Verihubs;
@@ -112,7 +112,7 @@ mysqli_begin_transaction($db);
 $newMbrId = User::createMbrId();
 $passwordHash = password_hash($data['password'], PASSWORD_BCRYPT);
 $dateExpired = date("Y-m-d H:i:s", strtotime("+1 hour"));
-$insert = DBHelper::insert("tb_member", [
+$insert = Database::insert("tb_member", [
     'MBR_ID' => $newMbrId,
     'MBR_IDSPN' => $defaultIdspn,
     'MBR_CODE' => uniqid(),

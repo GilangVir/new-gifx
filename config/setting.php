@@ -19,7 +19,7 @@ define("CONFIG_ROOT", __DIR__);
 define("WEB_ROOT", str_replace("config", "client-tridentpro.com", __DIR__));
 define("CRM_ROOT", str_replace("config", "admin-tridentpro.com", __DIR__));
 
-$db = Database::getConnection();
+$db = Database::connect();
 CompanyProfile::init();
 
 function JsonResponse(array $data = []) {

@@ -1,6 +1,6 @@
 <?php 
 use App\Models\Helper;
-use App\Models\DBHelper;
+use Config\Core\Database;
 use App\Models\Token;
 use App\Models\TokenGenerator;
 use App\Models\User;
@@ -24,7 +24,7 @@ if(strtotime($userData['MBR_OTP_EXPIRED']) < strtotime("now")) {
 }
 
 /** Update Sts */
-$update = DBHelper::update("tb_member", ['MBR_STS' => -1], ['MBR_ID' => $userData['MBR_ID']]);
+$update = Database::update("tb_member", ['MBR_STS' => -1], ['MBR_ID' => $userData['MBR_ID']]);
 if(!$update) {
     die("<script>alert('Verification failed'); location.href = '/';</script>");
 }

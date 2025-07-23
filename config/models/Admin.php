@@ -11,7 +11,7 @@ class Admin extends AdminAuth {
         try {
             global $db;
             if(empty($db)) {
-                $db = DBHelper::getConnection();
+                $db = Database::connect();
             }
 
             $select = $db->query("SELECT (SELECT (MAX(tb2.ADM_ID) + 1) FROM tb_admin as tb2) as ADM_ID");
@@ -26,7 +26,7 @@ class Admin extends AdminAuth {
         try {
             global $db;
             if(empty($db)) {
-                $db = DBHelper::getConnection();
+                $db = Database::connect();
             }
 
             /** Check Database */

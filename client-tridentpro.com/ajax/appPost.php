@@ -2,14 +2,14 @@
 require_once __DIR__ . "/../../config/setting.php";
 require_once CONFIG_ROOT . "/vendor/autoload.php";
 
-use App\Models\DBHelper;
+use Config\Core\Database;
 use App\Models\User;
 use App\Models\ApiMetatrader;
 use App\Models\Account;
 
 
 try {
-    $db = DBHelper::getConnection();
+    $db = Database::connect();
 
     $parseUrl = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $requestUri = str_replace(['\*', '/ajax', '/post'], ['', '', '/postdata'], $parseUrl);

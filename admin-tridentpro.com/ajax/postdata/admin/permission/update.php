@@ -1,7 +1,7 @@
 <?php
 use App\Models\Helper;
 use App\Models\Admin;
-use App\Shared\AdminPermission\Core\AdminPermissionCore;
+use Allmedia\Shared\AdminPermission\Core\AdminPermissionCore;
 
 $permission = AdminPermissionCore::hasPermission($authorizedPermission, $url);
 if(!$permission && $user['ADM_LEVEL'] != 1) {

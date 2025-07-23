@@ -5,7 +5,7 @@ use App\Models\Helper;
 class Logger {
     
     public static function client_log(array $data = ['mbrid' => 0, 'module' => '', 'data' => [], 'message' => '', 'device' => 'website']) {
-        DBHelper::insert("tb_log", [
+        Database::insert("tb_log", [
             'LOG_MBR' => $data['mbrid'] ?? 0,
             'LOG_MODULE' => $data['module'] ?? "-",
             'LOG_DATA' => json_encode($data['data']),
@@ -17,7 +17,7 @@ class Logger {
     }   
 
     public static function admin_log(array $data) {
-        DBHelper::insert("tb_log", [
+        Database::insert("tb_log", [
             'LOG_ADM' => $data['admid'] ?? 0,
             'LOG_MODULE' => $data['module'] ?? "-",
             'LOG_DATA' => json_encode($data['data']),

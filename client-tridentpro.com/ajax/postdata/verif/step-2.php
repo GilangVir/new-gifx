@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\DBHelper;
+use Config\Core\Database;
 use App\Models\FileUpload;
 use App\Models\Helper;
 use App\Models\Logger;
@@ -158,7 +158,7 @@ $updateData = [
     'MBR_TGLLAHIR' => date('Y-m-d H:i:s', strtotime($data['date_of_birth']))
 ];
 
-$updateMember = DBHelper::update("tb_member", $updateData, ['MBR_ID' => $user['MBR_ID']]);
+$updateMember = Database::update("tb_member", $updateData, ['MBR_ID' => $user['MBR_ID']]);
 if(!$updateMember) {
     $db->rollback();
     JsonResponse([

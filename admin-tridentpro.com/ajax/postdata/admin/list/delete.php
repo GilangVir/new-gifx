@@ -1,9 +1,9 @@
 <?php
 use App\Models\Helper;
 use App\Models\Admin;
-use App\Models\DBHelper;
+use Config\Core\Database;
 use App\Models\Logger;
-use App\Shared\AdminPermission\Core\AdminPermissionCore;
+use Allmedia\Shared\AdminPermission\Core\AdminPermissionCore;
 
 $permission = AdminPermissionCore::hasPermission($authorizedPermission, $url);
 if(!$permission) {
@@ -28,7 +28,7 @@ if(!$admin) {
 }
 
 /** update */
-$update = DBHelper::update("tb_admin", ['ADM_STS' => 0], ['ID_ADM' => $adminId]);
+$update = Database::update("tb_admin", ['ADM_STS' => 0], ['ID_ADM' => $adminId]);
 if(!$update) {
     JsonResponse([
         'code'      => 200,
