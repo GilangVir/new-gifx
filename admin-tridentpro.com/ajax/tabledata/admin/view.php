@@ -15,6 +15,7 @@ $dt->query('
     JOIN tb_admin_role tar ON (tar.ID_ADMROLE = ADM_LEVEL)
     JOIN tb_country tc ON (tc.ID_COUNTRY = ADM_COUNTRY)
     WHERE tb_admin.ADM_LEVEL > '.$user['ADM_LEVEL'].'
+    AND ADM_STS = -1
 ');
 
 $dt->hide('ID_ADM');
