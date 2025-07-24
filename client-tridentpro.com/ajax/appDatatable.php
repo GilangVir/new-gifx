@@ -6,25 +6,23 @@ if(session_status() === PHP_SESSION_NONE) {
 require_once __DIR__ . "/../../config/setting.php";
 use Ozdemir\Datatables\Datatables;
 use Ozdemir\Datatables\DB\MySQL;
-use App\Models\Helper;
 use Config\Core\Database;
 use App\Models\User;
 
 try {
     global $_SESSION, $_COOKIE;
     global $db;
-    $aws_folder = "https://allmediaindo-2.s3.ap-southeast-1.amazonaws.com/gfsprime/";
     $dt = new Datatables( new MySQL([ 
-        'host'     => DBHelper::$host,
-        'port'     => DBHelper::$port,
-        'username' => DBHelper::$username,
-        'password' => DBHelper::$password,
-        'database' => DBHelper::$database 
+        'host'     => Database::$host,
+        'port'     => Database::$port,
+        'username' => Database::$username,
+        'password' => Database::$password,
+        'database' => Database::$database 
     ]));
     
 
     /** validate token */
-    $user = User::authentication();
+    $user = User::user();
     if(empty($user)) {
         JsonResponse([
             'code'      => 404,
