@@ -30,12 +30,6 @@ $dt->edit('ADM_STS', function($data) {
 });
 
 $dt->edit('ADM_ID', function ($data) {
-    //         <a href='javascript:void(0)' data-id='".$data['ID_ADM']."' class='btn btn-sm btn-danger delete'>
-    //             <i class='fas fa-trash text-white'></i>
-    //         </a>
-    //         <a href='/admin/permission/update/".($data['ID_ADM'])."' class='btn btn-sm btn-primary'>
-    //             <i class='fas fa-gear text-white'></i>
-    //         </a>
     return "<div class='action d-flex justify-content-center gap-2' data-id='".$data['ID_ADM']."'></div>";
 });
 

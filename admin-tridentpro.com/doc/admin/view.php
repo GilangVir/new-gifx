@@ -9,6 +9,9 @@
     </div>
 </div>
 
-<?php App\Shared\AdminPermission\SharedViews::render("admins/tabledata", ['filePermission' => $filePermission]); ?>
-<?php App\Shared\AdminPermission\SharedViews::render("admins/update_button", ['filePermission' => $filePermission]); ?>
-<?php App\Shared\AdminPermission\SharedViews::render("admins/permission_button", ['filePermission' => $filePermission]); ?>
+<?php 
+Allmedia\Shared\AdminPermission\SharedViews::render("admins/view", [
+    'isAllowToCreate' => $adminPermissionCore->isHavePermission($moduleId, "create"),
+    'isAllowToUpdate' => $adminPermissionCore->isHavePermission($moduleId, "update"),
+]); 
+?>
