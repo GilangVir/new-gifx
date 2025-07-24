@@ -1,9 +1,8 @@
 <?php
 use App\Models\Helper;
 use App\Models\Admin;
-use Allmedia\Shared\AdminPermission\Core\AdminPermissionCore;
 
-$permission = AdminPermissionCore::hasPermission($authorizedPermission, $url);
+$permission = $adminPermissionCore->hasPermission($authorizedPermission, $url);
 if(!$permission && $user['ADM_LEVEL'] != 1) {
     JsonResponse([
         'code'      => 200,
