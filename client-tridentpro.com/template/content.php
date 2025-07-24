@@ -21,7 +21,8 @@
 
         default: 
             if($user['MBR_STS'] != -1) die("<script>location.href = '/verif/step-1'; </script>");
-            $fileUrl = Allmedia\Shared\AdminPermission\Core\UrlParser::urlToPath(Helper::getSafeInput($_GET));
+            $getInput = array_filter($_GET, fn($key) => in_array($key, range('a', 'f'), true), ARRAY_FILTER_USE_KEY);
+            $fileUrl = Allmedia\Shared\AdminPermission\Core\UrlParser::urlToPath(Helper::getSafeInput($getInput));
             $filename = WEB_ROOT ."/doc/$fileUrl.php";
             file_exists($filename) 
                 ? require_once $filename
