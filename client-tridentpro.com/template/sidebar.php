@@ -105,9 +105,7 @@ $isIB = false;
                             <?php if(User::allowToApplyReferral($userid)) : ?>
                                 <a href="/ib/apply-referral" class="sidebar-link"><span class="nav-icon"><i class="fa-light fa-link"></i></span> <span class="sidebar-txt">Apply Referral</span></a>
                             <?php endif; ?>
-                            <?php if($user['MBR_BECOME_IB']) : ?>
-                                <a href="/ib/become" class="sidebar-link"><span class="nav-icon"><i class="fa-light fa-users"></i></span> <span class="sidebar-txt">Become IB</span></a>
-                            <?php endif; ?>
+                            <a href="/ib/become" class="sidebar-link"><span class="nav-icon"><i class="fa-light fa-users"></i></span> <span class="sidebar-txt">Become IB</span></a>
                             <a href="/ib/tree" class="sidebar-link"><span class="nav-icon"><i class="fa-light fa-users"></i></span> <span class="sidebar-txt">Treeview</span></a>
                         </li>
                     </ul>
