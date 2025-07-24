@@ -7,7 +7,7 @@ require_once __DIR__ . "/../../config/setting.php";
 use Ozdemir\Datatables\Datatables;
 use Ozdemir\Datatables\DB\MySQL;
 use App\Models\Helper;
-use App\Models\DBHelper;
+use Config\Core\Database;
 use App\Models\User;
 
 try {

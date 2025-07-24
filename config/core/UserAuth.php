@@ -1,7 +1,7 @@
 <?php
 namespace Config\Core;
 
-use App\Models\DBHelper;
+use Config\Core\Database;
 use App\Models\Token;
 use Exception;
 
@@ -58,7 +58,7 @@ class UserAuth {
         try {
             global $db, $_SESSION, $_COOKIE;
             if(empty($db)) {
-                $db = DBHelper::getConnection();
+                $db = Database::connect();
             }
 
             $authData = self::getAuthData();

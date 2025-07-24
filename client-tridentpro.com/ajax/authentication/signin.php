@@ -1,6 +1,6 @@
 <?php
 use App\Models\Helper;
-use App\Models\DBHelper;
+use Config\Core\Database;
 use App\Models\Logger;
 use App\Models\User;
 use App\Models\Token;
@@ -48,7 +48,7 @@ switch($userData['MBR_STS']) {
             /** Update OTP */
             $dateExpired = date("Y-m-d H:i:s", strtotime("+1 hour"));
             $otpCode = random_int(1000, 9999);
-            $updateOtp = DBHelper::update("tb_member", ['MBR_OTP' => $otpCode, 'MBR_OTP_EXPIRED' => $dateExpired], ['MBR_ID' => $userData['MBR_ID']]);
+            $updateOtp = Database::update("tb_member", ['MBR_OTP' => $otpCode, 'MBR_OTP_EXPIRED' => $dateExpired], ['MBR_ID' => $userData['MBR_ID']]);
             if(!$updateOtp) {
                 JsonResponse([
                     'success'   => false,

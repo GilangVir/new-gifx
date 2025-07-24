@@ -1,7 +1,6 @@
 <?php 
 use App\Models\Helper;
 use App\Models\Admin;
-use App\Shared\AdminPermission\Core\AdminPermissionCore;
 
 try {
     $idAdmin = Helper::form_input($_GET['d'] ?? "me");
@@ -16,7 +15,7 @@ try {
         die("<script>alert('Admin tidak ditemukan'); location.href = '/admins'; </script>");
     }
 
-    $authorizeModule = AdminPermissionCore::getModule_and_Permissions($idAdmin);
+    $authorizeModule = $adminPermissionCore->getModule_and_Permissions($idAdmin);
 
 } catch (Exception $e) {
     throw $e;

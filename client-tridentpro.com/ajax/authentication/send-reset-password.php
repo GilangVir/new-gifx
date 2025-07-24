@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\DBHelper;
+use Config\Core\Database;
 use App\Models\Helper;
 use App\Models\User;
 use Config\Core\EmailSender;

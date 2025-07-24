@@ -8,14 +8,11 @@
 	</div>
 </div>
 
-<div class="row">
-    <div class="col-md-4 mb-3">
-        <?php App\Shared\AdminPermission\SharedViews::render("permission-group/create", ['filePermission' => $filePermission]); ?>
-    </div>
-    <div class="col mb-3">
-        <?php App\Shared\AdminPermission\SharedViews::render("permission-group/tabledata", ['filePermission' => $filePermission]); ?>
-    </div>
-</div>
-
-<?php App\Shared\AdminPermission\SharedViews::render("permission-group/update", ['filePermission' => $filePermission]); ?>
-<?php App\Shared\AdminPermission\SharedViews::render("permission-group/delete", ['filePermission' => $filePermission]); ?>
+<?php 
+Allmedia\Shared\AdminPermission\SharedViews::render("permission-group/view", [
+	'isAllowToCreate' => $adminPermissionCore->isHavePermission($moduleId, "create"),
+	'isAllowToUpdate' => $adminPermissionCore->isHavePermission($moduleId, "update"),
+	'isAllowToDelete' => $adminPermissionCore->isHavePermission($moduleId, "delete"),
+	'availableGroups' => $adminPermissionCore->availableGroup()
+]);
+?>

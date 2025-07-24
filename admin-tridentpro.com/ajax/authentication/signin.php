@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Admin;
-use App\Models\DBHelper;
+use Config\Core\Database;
 use App\Models\Helper;
 
 $data = Helper::getSafeInput($_POST);
@@ -57,7 +57,7 @@ $updateData = [
     'ADM_TOKEN_SALT' => $salt,
     'ADM_TOKEN_EXPIRED' => $date
 ];
-$update = DBHelper::update("tb_admin", $updateData, ['ADM_ID' => $admin['ADM_ID']]);
+$update = Database::update("tb_admin", $updateData, ['ADM_ID' => $admin['ADM_ID']]);
 if(!$update) {
     JsonResponse([
         'code'  => 200,

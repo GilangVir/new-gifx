@@ -12,7 +12,7 @@ class User extends UserAuth {
         try {
             global $db;
             if(empty($db)) {
-                $db = Database::getConnection();
+                $db = Database::connect();
             }
 
             $select = $db->query("SELECT UNIX_TIMESTAMP(NOW())+(SELECT IFNULL(MAX(tb.ID_MBR),0) FROM tb_member tb) as ID");
@@ -31,7 +31,7 @@ class User extends UserAuth {
                 return false;
             }
     
-            $db = Database::getConnection();
+            $db = Database::connect();
             $sqlGet = $db->query("SELECT * FROM tb_member WHERE MBR_ID = {$userid} LIMIT 1");
             if($sqlGet->num_rows != 1) {
                 return false;
@@ -169,7 +169,7 @@ class User extends UserAuth {
 
     public static function isVerified(int $mbrid) {
         try {
-            $db = DBHelper::getConnection();
+            $db = Database::connect();
             $sqlGet = $db->query("SELECT * FROM tb_member_file WHERE MBRFILE_MBR = {$mbrid}");
             if($sqlGet->num_rows != 1) {
                 return false;
@@ -190,7 +190,7 @@ class User extends UserAuth {
     public static function setResetPasswordCode(int $mbrid, string $code) {
         try {
             $expired = date("Y-m-d H:i:s", strtotime("+10 minute"));
-            $update = DBHelper::update("tb_member", ['MBR_RESET_CODE' => $code, 'MBR_RESET_EXPIRED' => $expired], ['MBR_ID' => $mbrid]);
+            $update = Database::update("tb_member", ['MBR_RESET_CODE' => $code, 'MBR_RESET_EXPIRED' => $expired], ['MBR_ID' => $mbrid]);
             if(!$update) {
                 return false;
             }
@@ -208,7 +208,7 @@ class User extends UserAuth {
 
     public static function verifyResetCode(string $code) {
         try {
-            $db = DBHelper::getConnection();
+            $db = Database::connect();
             $sqlGet = $db->query("SELECT MBR_ID, MBR_EMAIL, MBR_RESET_EXPIRED FROM tb_member WHERE MBR_RESET_CODE = '{$code}' LIMIT 1");
             if($sqlGet->num_rows != 1) {
                 return false;

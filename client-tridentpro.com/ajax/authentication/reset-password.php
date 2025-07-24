@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\DBHelper;
+use Config\Core\Database;
 use App\Models\Helper;
 use App\Models\User;
 
@@ -52,7 +52,7 @@ if(base64_encode($data['password']) != base64_encode($data['password_confirm']))
 
 /** Update Password */
 $passwordHash = password_hash($data['password'], PASSWORD_BCRYPT);
-$update = DBHelper::update("tb_member", ['MBR_PASS' => $passwordHash, 'MBR_RESET_EXPIRED' => date("Y-m-d H:i:s")], ['MBR_ID' => $isValidCode]);
+$update = Database::update("tb_member", ['MBR_PASS' => $passwordHash, 'MBR_RESET_EXPIRED' => date("Y-m-d H:i:s")], ['MBR_ID' => $isValidCode]);
 if(!$update) {
     JsonResponse([
         'success' => false,

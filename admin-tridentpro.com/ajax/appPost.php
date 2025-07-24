@@ -2,11 +2,12 @@
 require_once __DIR__ . "/../../config/setting.php";
 require_once CONFIG_ROOT . "/vendor/autoload.php";
 use App\Models\Admin;
-use App\Shared\AdminPermission\Core\AdminPermissionCore;
+use Allmedia\Shared\AdminPermission\Core\AdminPermissionCore;
+use App\Factory\AdminPermissionFactory;
 use Config\Core\Database;
 
 try {
-    $db = Database::getConnection();
+    $db = Database::connect();
     $parseUrl = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $requestUri = str_replace(['\*', '/ajax', '/post'], ['', '', '/postdata'], $parseUrl);
     $fileUrl = __DIR__ . $requestUri . ".php";
@@ -40,7 +41,8 @@ try {
         ]);
     }
 
-    $authorizedPermission = AdminPermissionCore::getAuthrorizedPermissions($user['ID_ADM']);
+    $adminPermissionCore = AdminPermissionFactory::adminPermissionCore();
+    $authorizedPermission = $adminPermissionCore->getAuthrorizedPermissions($user['ID_ADM']);
     $url = str_replace("/postdata", "", $requestUri);
     require_once $fileUrl;
 

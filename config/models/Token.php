@@ -1,7 +1,7 @@
 <?php
 namespace App\Models;
 
-use App\Models\DBHelper;
+use Config\Core\Database;
 use Config\Core\TokenGenerator;
 use Exception;
 
@@ -20,7 +20,7 @@ class Token extends TokenGenerator {
             $accessTokenExpires = date('Y-m-d H:i:s', time() + ACCESS_TOKEN_LIFETIME);
             $refreshTokenExpires = date('Y-m-d H:i:s', time() + REFRESH_TOKEN_LIFETIME);
     
-            return DBHelper::insert("tb_member_token", [
+            return Database::insert("tb_member_token", [
                 'mbr_id' => $userId,
                 'access_token' => $accessToken,
                 'refresh_token' => $refreshToken,

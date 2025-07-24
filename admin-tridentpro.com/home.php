@@ -3,8 +3,8 @@ require_once __DIR__ . "/../config/setting.php";
 use App\Models\Helper;
 use App\Models\Admin;
 use App\Models\CompanyProfile;
-use App\Models\DBHelper;
-use App\Shared\AdminPermission\Core\AdminPermissionCore;
+use Config\Core\Database;
+use App\Factory\AdminPermissionFactory;
 
 $queryParam = Helper::getSafeInput($_GET);
 $page = $queryParam['a'] ?? "";
@@ -21,11 +21,12 @@ if(empty($user)) {
 /** update token expired */
 $userid = md5(md5($user['ADM_ID']));
 $newExpired = date("Y-m-d H:i:s", strtotime("+1 hour"));
-DBHelper::update("tb_admin", ['ADM_TOKEN_EXPIRED' => $newExpired], ['ADM_ID' => $user['ADM_ID']]);
+Database::update("tb_admin", ['ADM_TOKEN_EXPIRED' => $newExpired], ['ADM_ID' => $user['ADM_ID']]);
 
 /** Permission */
-$getAuthrorizedPermissions = AdminPermissionCore::getAuthrorizedPermissions($user['ID_ADM']);
-$filePermission = AdminPermissionCore::hasPermission($getAuthrorizedPermissions);
+$adminPermissionCore = AdminPermissionFactory::adminPermissionCore();
+$getAuthrorizedPermissions = $adminPermissionCore->getAuthrorizedPermissions($user['ID_ADM']);
+$filePermission = $adminPermissionCore->hasPermission($getAuthrorizedPermissions);
 ?>
 <!DOCTYPE html>
 <html lang="en">
