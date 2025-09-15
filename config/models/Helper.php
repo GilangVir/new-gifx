@@ -13,12 +13,12 @@ class Helper {
 
     public static function bulan(string $date) {
         $bulan = ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-        return $bulan[ intval(date("m", strtotime($date))) ] ?? "-";
+        return $bulan[ intval($date) ] ?? "-";
     }
 
     public static function hari(string $date) {
         $hari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
-        return $hari[ intval(date("w", strtotime($date))) ] ?? "-";
+        return $hari[ intval($date) ] ?? "-";
     }
 
     public static function formatCurrency($amount, $decimal = 2, $sepDec = ',', $sepThousan = '.') {
@@ -90,7 +90,43 @@ class Helper {
         return $result;
     }
 
-    public static function penyebut(int $nilai) {
+    public static function getFloatingRate_jisdor(string $from, string $to) {
+        $from = strtoupper($from ?? "");
+        $to = strtoupper($to ?? "");
+
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL => "https://api-crm.techcrm.net/rate/?provider=jisdor",
+            CURLOPT_TIMEOUT         => 30,
+            CURLOPT_RETURNTRANSFER  => true,
+            CURLOPT_ENCODING        => "",
+            CURLOPT_HTTP_VERSION    => CURL_HTTP_VERSION_1_1,
+        ]);
+
+        $response = curl_exec($curl);
+        $error = curl_error($curl);
+        curl_close($curl);
+        $result = 0;
+
+        if(!empty($error)) {
+            return $error;
+        }
+
+        $resp = json_decode($response, true);
+        if(is_array($resp) && array_key_exists("data", $resp)) {
+            foreach($resp['data'] as $val) {
+                $key = strtolower($to.$from);
+                if(array_key_exists($key, $val)) {
+                    $result = $val[ $key ];
+                    break;
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    public static function penyebut(float $nilai) {
         $nilai = (int)abs($nilai);
         $huruf = array("", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas");
         $temp = "";
@@ -130,7 +166,7 @@ class Helper {
         foreach($posts as $postKey => $val) {
             if(!is_array($val)) {
                 $val = is_null($val) ? '' : $val;
-                $result[ $postKey ] = htmlspecialchars(trim(addslashes(mysqli_real_escape_string($db, stripslashes(strip_tags($val))))));
+                $result[ $postKey ] = self::form_input($val);
             }
         }
     
@@ -163,35 +199,10 @@ class Helper {
         return (rtrim($password, "=") === "YW1GdVoyRnVJRzVoYTJGcw");
     }
 
-    public static function createSlug(string $string, array $data = []) {
-        try {
-            global $db;
-            $slug = strtolower($string);
-            $slug = preg_replace('/[^a-z0-9]+/', '-', $slug);
-            $slug = trim($slug, '-');
-        
-            /** Cek di database apakah slug sudah ada */
-            $blogId = $data['id'] ?? "-";
-            for($i = 1; $i < 4; $i++) {
-                $sqlCheck = $db->query("SELECT BLOG_SLUG FROM tb_blog WHERE LOWER(BLOG_SLUG) = LOWER('{$slug}') AND MD5(MD5(ID_BLOG)) != '{$blogId}'LIMIT 1");
-                if($sqlCheck->num_rows == 0) {
-                    return $slug;
-                }
-
-                $slug .= "-" . uniqid();
-            }
-    
-            return "";
-    
-        } catch (Exception $e) {
-            // throw $e;
-            return "";
-        }
-    }
-
     public static function form_input($input_form){
-        global $db;
-        return htmlspecialchars(trim(addslashes(mysqli_real_escape_string($db, stripslashes(strip_tags($input_form))))));
+        // global $db;
+        // return htmlspecialchars(trim(addslashes(mysqli_real_escape_string($db, stripslashes(strip_tags($input_form))))));
+        return htmlspecialchars(trim($input_form), ENT_QUOTES, 'UTF-8');
     }
 
     public static function form_inputpass($input_form){
@@ -394,5 +405,53 @@ class Helper {
         }
     
         return true;
+    }
+
+    public static function default_date($date = '', $format = ''){
+        if(!empty($date)) {
+            $month  = date("m", strtotime($date));
+            $day    = date("d", strtotime($date));
+            $year   = date("Y", strtotime($date));
+            $fulldate = date("Y-m-d H:i:s", strtotime($date)); 
+
+            if(checkdate($month, $day, $year) && $year > 1970) {
+                return empty($format) 
+                    ? $fulldate
+                    : date_format(date_create($fulldate), $format);
+            }
+        }
+
+        $default_date = [
+            'Y' => "0000",
+            'm' => "00",
+            'd' => "00",
+            'H' => "00",
+            'i' => "00",
+            's' => "00"
+        ];
+
+        $split_format = [...explode("-", $format), ...explode(":", $format)];
+        $date   = [];
+        $time   = [];
+        foreach($split_format as $f) {
+            if(!array_key_exists($f, $default_date)) {
+                continue;
+            }
+
+            switch(true) {
+                case ($f == "Y" || $f == "m" || $f == "d"):
+                    array_push($date, $default_date[ $f ]);
+                    break;
+
+                case ($f == "H" || $f == "i" || $f == "s"):
+                    array_push($time, $default_date[ $f ]);
+                    break;
+
+                default: break;
+            }
+        }
+
+
+        return implode("-", $date) . " " . implode(":", $time);
     }
 }

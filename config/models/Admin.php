@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use Config\Core\AdminAuth;
+use Config\Core\Database;
 use Config\Core\SystemInfo;
 use Exception;
 
@@ -61,9 +62,42 @@ class Admin extends AdminAuth {
             return $sqlGet->fetch_all(MYSQLI_ASSOC);
 
         } catch (Exception $e) {
+            if(SystemInfo::isDevelopment()) {
+                throw $e;
+            }
+
             return [];
         }
     }
 
+    public static function getAdminBank(string $id): array|bool {
+        try {
+            $db = Database::connect();
+            $sqlGet = $db->query("SELECT * FROM tb_bankadm WHERE MD5(MD5(ID_BKADM)) = '{$id}' LIMIT 1");
+            return $sqlGet->fetch_assoc();
+
+        } catch (Exception $e) {
+            if(SystemInfo::isDevelopment()) {
+                throw $e;
+            }
+            
+            return false;
+        }
+    }
+
+    public static function findBankByCurrency(string $currency): array {
+        try {
+            $db = Database::connect();
+            $sqlGet = $db->query("SELECT * FROM tb_bankadm WHERE LOWER(BKADM_CURR) = LOWER('{$currency}') LIMIT 1");
+            return $sqlGet->fetch_all(MYSQLI_ASSOC);
+
+        } catch (Exception $e) {
+            if(SystemInfo::isDevelopment()) {
+                throw $e;
+            }
+            
+            return [];
+        }
+    }
     
 }

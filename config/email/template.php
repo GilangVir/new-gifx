@@ -114,8 +114,8 @@
 
 
     <!--[if !mso]><!-->
-    <link href="https://fonts.googleapis.com/css?family"Lato"400,700&display=swap" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family"Lato"400,700&display=swap" rel="stylesheet" type="text/css"><!--<![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet" type="text/css"><!--<![endif]-->
 
 </head>
 
@@ -173,7 +173,7 @@
 
 
                     <div class="u-row-container" style="padding: 0px;background-color: transparent">
-                        <div class="u-row" style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #ACB95D;">
+                        <div class="u-row" style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #91938a;">
                             <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
                                 <div class="u-col u-col-100" style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
                                     <div style="height: 100%;width: 100% !important;">
@@ -185,7 +185,7 @@
                                                             <table width="100%" cellpadding="0" cellspacing="0" border="0">
                                                                 <tr>
                                                                     <td style="padding-right: 0px;padding-left: 0px;" align="center">
-                                                                        <img align="center" border="0" src="https://cabinet-tridentprofutures.techcrm.net/assets/images/logo-black-new.png" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 29%;max-width: 168.2px;" width="168.2" class="v-src-width v-src-max-width" />
+                                                                        <img align="center" border="0" src="https://client-rrfx.techcrm.net/assets/images/logo-white-new1.png" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 29%;max-width: 168.2px;" width="168.2" class="v-src-width v-src-max-width" />
                                                                     </td>
                                                                 </tr>
                                                             </table>
@@ -210,8 +210,31 @@
                                     <div style="height: 100%;width: 100% !important;">
                                         <!--[if (!mso)&(!IE)]><!-->
                                         <div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;"><!--<![endif]-->
-                                            <div style="margin: 5px 10px;"><table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="600" style="background-color:#fff;border-radius:0;color:#000;width:600px;margin:0 auto">
+                                            <div style="margin: 5px 20px;">
+                                                <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="600" style="background-color:#fff;border-radius:0;color:#000;width:600px;margin:0 auto">
+                                                
                                                 <?php require_once $content; ?>
+
+                                                <hr>
+                                                <p style="text-align: justify; margin-bottom: 30px;">Anda menerima email ini karena Anda mendaftar di <?= $profile['website'] ?> jika Anda memiliki pertanyaan, silahkan hubungi kami melalui email di <?= $profile['support'] ?>. Anda juga dapat menghubungi nomor <?= $profile['phone'] ?></p>
+                                                <hr>
+                                                <table>
+                                                    <tbody>
+                                                        <tr><td><b>Company</b> : <?= $profile['name']; ?></td></tr>
+                                                        <tr><td><b>Support</b> : <?= $profile['support'] ?></td></tr>
+                                                        <tr><td><b>Website</b> : <?= $profile['website'] ?></td></tr>
+                                                        <tr><td><b>Address</b> : <?= $profile['address'] ?></td></tr>
+                                                    </tbody>
+                                                </table>
+                                                <p style="text-align: justify; margin-top: 20px;">Resmi dan diatur oleh Badan Pengawas Perdagangan Berjangka Komoditi. Nomor registrasi BAPPEBTI : <?= $profile['no_bappebti'] ?>.</p>
+                                                <p style="margin-top: 10px;">
+                                                    <img src="https://mobileibftraders.techcrm.net/assets/img/sosmed/ig.png" alt="Instagram">
+                                                    <img src="https://mobileibftraders.techcrm.net/assets/img/sosmed/fb.png" alt="Facebook">
+                                                    <img src="https://mobileibftraders.techcrm.net/assets/img/sosmed/linkedin.png" alt="Linkedin">
+                                                </p>
+                                                <hr>
+                                                <h4 style="margin-bottom: 2px;">PEMBERITAHUAN RESIKO:</h4>
+                                                <p style="text-align: justify;">Semua produk finansial yang ditransaksikan dalam sistem margin mempunyai resiko tinggi terhadap dana Anda. Produk finansial ini tidak diperuntukkan bagi semua investor dan Anda bisa saja kehilangan dana lebih dari deposit awal Anda. Pastikan bahwa Anda benar-benar mengerti resikonya, dan mintalah nasihat independen jika diperlukan. Lihat Pemberitahuan Resiko lengkap kami di Ketentuan Bisnis.</p>
                                             </div>
                                             <!--[if (!mso)&(!IE)]><!-->
                                         </div><!--<![endif]-->
@@ -283,4 +306,3 @@
     </table>
 </body>
 </html>
-<?php require_once $content; ?>

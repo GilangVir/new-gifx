@@ -8,6 +8,8 @@ use Exception;
 
 class User extends UserAuth {
 
+    public static $identityType = ['KTP'];
+
     public static function createMbrId(): int {
         try {
             global $db;
@@ -36,8 +38,10 @@ class User extends UserAuth {
             if($sqlGet->num_rows != 1) {
                 return false;
             }
-    
-            return $sqlGet->fetch_assoc() ?? false;
+
+            $user = $sqlGet->fetch_assoc();
+            $user['userid'] = md5(md5($userid));
+            return $user;
 
         } catch (Exception $e) {
             if(ini_get("display_errors") == "1") {
@@ -50,7 +54,7 @@ class User extends UserAuth {
 
      public static function avatar(string $filename): string {
         if(empty($filename) || $filename == "-") {
-            return "/assets/images/avatar-14.png";
+            return "/assets/images/admin.png";
         }
 
         return FileUpload::awsFile($filename);
@@ -223,6 +227,104 @@ class User extends UserAuth {
 
         } catch (Exception $e) {
             if(SystemInfo::isDevelopment()) {
+                throw $e;
+            }
+
+            return false;
+        }
+    }
+
+    public static function myBank(int $mbrid, string $md5_id_bank = "-") {
+        try {
+            $db = Database::connect();
+            $sqlGet = $db->query("SELECT * FROM tb_member_bank WHERE MBANK_MBR = $mbrid");
+
+            $result = [];
+            switch(true) {
+                case ($md5_id_bank == "-"):
+                    $result = $sqlGet->fetch_all(MYSQLI_ASSOC);
+                    break;
+
+
+                case ($md5_id_bank != "-"):
+                    $arr = $sqlGet->fetch_all(MYSQLI_ASSOC);
+                    foreach($arr as $a) {
+                        if(md5(md5($a['ID_MBANK'])) == $md5_id_bank) {
+                            $result = $a;
+                        }
+                    }
+                    break;
+
+            }
+            
+            return $result;
+
+        } catch (Exception $e) {
+            if(SystemInfo::isDevelopment()) {
+                throw $e;
+            }
+
+            return [];
+        }
+    }
+
+    public static function get_ib_data(int $mbrid = 0, array $status = [0, -1, 1]): array|bool {
+        try {
+            $db = Database::connect();
+            $sqlGet = $db->query("
+                SELECT 
+                    tbi.*,
+                    tm.MBR_NAME,
+                    tm.MBR_EMAIL,
+                    tm.MBR_ID,
+                    tm.MBR_TYPE
+                FROM tb_become_ib tbi
+                JOIN tb_member tm ON (tm.MBR_ID = tbi.BECOME_MBR)
+                WHERE BECOME_MBR = {$mbrid} 
+                AND BECOME_STS IN (".implode(",", $status).")
+                ORDER BY ID_BECOME DESC
+                LIMIT 1
+            ");
+
+            return $sqlGet->fetch_assoc() ?? false;       
+
+        } catch (Exception $e) {
+            if(SystemInfo::isDevelopment()) {
+                throw $e;
+            }
+
+            return false;
+        }
+    }
+
+    public static function findByMemberId(int $mbrid = 0): array|bool {
+        try {
+            $db = Database::connect();
+            $sqlGet = $db->query("SELECT * FROM tb_member WHERE MBR_ID = {$mbrid} LIMIT 1");
+            return $sqlGet->fetch_assoc() ?? false;       
+
+        } catch (Exception $e) {
+            if(SystemInfo::isDevelopment()) {
+                throw $e;
+            }
+
+            return false;
+        }
+    }
+    public static function checkReqDeleteAccount(): bool|array {
+        try {
+            /** Return array on success and bool on error */
+            $userid = self::authentication();
+            if(!$userid) {
+                return false;
+            }
+    
+            $db = Database::connect();
+            $sqlGet = $db->query("SELECT 1 FROM tb_dlt_account WHERE DLTACC_MBR = {$userid} AND DLTACC_STS = 0 ORDER BY ID_DLTACC LIMIT 1");
+            return ($sqlGet->num_rows == 0) ? true : false;
+
+        } catch (Exception $e) {
+            if(ini_get("display_errors") == "1") {
                 throw $e;
             }
 

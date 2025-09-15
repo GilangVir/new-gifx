@@ -10,6 +10,7 @@ use PHPmailer\PHPMailer\Exception;
 use PHPmailer\PHPMailer\PHPMailer;
 use PHPmailer\PHPMailer\SMTP;
 use Dotenv\Dotenv;
+use App\Models\ProfilePerusahaan;
 use Exception as PHPException;
 
 class EmailSender {
@@ -66,7 +67,17 @@ class EmailSender {
         if(!file_exists($path)) throw new PHPException("[GET] Can't Parsing Files Not Found");
 
         /** Extract Array */
+        $profile = ProfilePerusahaan::get();
         $data['content'] = $path;
+        $data['profile'] = [
+            'name' => $profile['PROF_COMPANY_NAME'],
+            'phone' => $profile['OFFICE']['OFC_PHONE'],
+            'support' => $profile['OFFICE']['OFC_EMAIL'],
+            'website' => $profile['PROF_HOMEPAGE'],
+            'address' => $profile['OFFICE']['OFC_ADDRESS'],
+            'no_bappebti' => $profile['PROF_NO_IZIN_USAHA']
+        ];
+        
         extract($data, EXTR_OVERWRITE);
         ob_start();
         require_once $this->folder . "template.php";
@@ -77,6 +88,10 @@ class EmailSender {
     public function get() {
         if(empty($this->file)) throw new Exception("[GET] Mohon daftarkan nama file terlebih dahulu");
         return $this->parseFileContent($this->file, $this->fileData);
+    }
+
+    public function addBcc(string $email, string $name) {
+        $this->mail->addBCC($email, $name);
     }
 
     public function send() {
