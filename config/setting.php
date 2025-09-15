@@ -16,8 +16,8 @@ date_default_timezone_set("Asia/Jakarta");
 error_reporting(E_ALL );
 ini_set("display_errors", ($_ENV['APP_MODE'] == "production"? 0 : 1));
 define("CONFIG_ROOT", __DIR__);
-define("WEB_ROOT", str_replace("config", "client-tridentpro.com", __DIR__));
-define("CRM_ROOT", str_replace("config", "admin-tridentpro.com", __DIR__));
+define("WEB_ROOT", str_replace("config", "client-gifx", __DIR__));
+define("CRM_ROOT", str_replace("config", "admin-gifx", __DIR__));
 
 $db = Database::connect();
 CompanyProfile::init();
