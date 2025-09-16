@@ -1,47 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+    
     <!-- tables -->
-        <table class="table table-striped">
-        <thead>
-            <tr>
-            <th scope="col">COUNTRY NAME</th>
-            <th scope="col">CURRENCY</th>
-            <th scope="col">CODE</th>
-            <th scope="col">PHONE CODE</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Mark</td>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-            </tr>
-        </tbody>
-        </table>
+
+            <div class="card">
+                <h5 class="card-header" style="padding: 10px;">List Negara</h5>
+                 <div class="card-body">
+                    <table class="table" id="countriesTable">
+                        <thead>
+                            <tr>
+                            <th scope="col">COUNTRY NAME</th>
+                            <th scope="col">CURRENCY</th>
+                            <th scope="col">CODE</th>
+                            <th scope="col">PHONE CODE</th>
+                            <th scope="col">ACTION</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+         
     <!-- tables -->
 
     
 <script type="text/javascript">
     let table;
     $(document).ready(function() {
-        table = $('#table').DataTable({
+        table = $('#countriesTable').DataTable({
             processing: true,
             serverSide: true,
             deferRender: true,
             scrollX: true,
             order: [[0, 'desc']],
             ajax: {
-                url: "/ajax/datatable/admin/view",
+                url: "/ajax/datatable/master/negara/view",
                 contentType: "application/json",
                 type: "GET",
             },
+            columns: [
+                { data: 'COUNTRY_NAME' },
+                { data: 'COUNTRY_CURR' },
+                { data: 'COUNTRY_CODE' },
+                { data: 'COUNTRY_PHONE_CODE' },
+                { data: 'action', orderable: false, searchable: false } // Kolom action
+            ],
             lengthMenu: [
                 [10, 50, 100, -1],
                 [10, 50, 100, "All"]
@@ -49,6 +50,33 @@
         });
     });
 </script>
-
 </body>
 </html>
+
+
+ <!-- <script type="text/javascript">
+    let table;
+    $(document).ready(function() {
+        table = $('#table').DataTable({
+            processing: true,
+            serverSide: true,
+            deferRender: true,
+            scrollX: true,
+            ajax: {
+                url: "/ajax/datatable/admin/master/negara/view.php",
+                type: "GET"
+            },
+            columns: [
+                { data: 'COUNTRY_NAME' },
+                { data: 'COUNTRY_CURR' },
+                { data: 'COUNTRY_CODE' },
+                { data: 'COUNTRY_PHONE_CODE' },
+                { data: 'action', orderable: false, searchable: false } // Kolom action
+            ],
+            lengthMenu: [
+                [10, 50, 100, -1],
+                [10, 50, 100, "All"]
+            ]
+        });
+    });
+    </script> -->
