@@ -10,8 +10,6 @@ $dt->query('
     ORDER BY COUNTRY_NAME
 ');
 
-
-
     $dt->query('
         SELECT
             COUNTRY_NAME,
