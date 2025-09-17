@@ -1,7 +1,8 @@
     
-    <!-- tables -->
+
 <div class="row">
     <div class="col-12 d-flex justify-content-center">
+<!-- form create -->
         <div class="col mb-3 mt-5">
             <div class="card">
                 <div class="card-header">
@@ -31,6 +32,9 @@
                 </div>
             </div>
         </div>
+<!-- form create -->
+
+<!-- tables -->
         <div class="col mb-3 mt-5">
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
@@ -54,9 +58,7 @@
         </div>
     </div>
 </div>
-
-         
-    <!-- tables -->
+<!-- tables -->
 
     
 <script type="text/javascript">
@@ -87,5 +89,7 @@
         });
     });
 </script>
+
+
 </body>
 </html>
