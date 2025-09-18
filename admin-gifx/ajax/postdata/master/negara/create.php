@@ -4,6 +4,8 @@
 
 use Config\Core\Database;
 
+
+
     $input = json_decode(file_get_contents('php://input'), true);
 
         // Debug: Tampilkan data yang diterima

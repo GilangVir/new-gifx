@@ -60,30 +60,51 @@
 <script type="text/javascript">
     let table;
     $(document).ready(function() {
-        table = $('#countriesTable').DataTable({
+        // menampilkan data table
+        // Datatable ini digunakan mengirikan request ke ajax(menampilkan data, menghapus data)
+        table = $('#countriesTable').DataTable({ 
             processing: true,
-            serverSide: true,
-            deferRender: true,
+            serverSide: true, //Data di-load dari server, bukan dari client (data diambil dari server)
+            deferRender: true, //Optimasi performa untuk dataset besar
             scrollX: true,
             order: [[0, 'desc']],
             ajax: {
                 url: "/ajax/datatable/master/negara/view",
                 contentType: "application/json",
                 type: "GET",
-            },
-            columns: [
-                { data: 'COUNTRY_NAME' },
-                { data: 'COUNTRY_CURR' },
-                { data: 'COUNTRY_CODE' },
-                { data: 'COUNTRY_PHONE_CODE' },
-                { data: 'action', orderable: false, searchable: false } // Kolom action
-            ],
+            }, 
             lengthMenu: [
                 [10, 50, 100, -1],
                 [10, 50, 100, "All"]
-            ]
+            ],
+            // delete
+            drawCallback: function(settings) {
+                $('.delete-btn').on('click', function() {
+                    const countryId = $(this).data('id');
+                    console.log('Attempting to delete country ID:', countryId)
+                    if(confirm('Are you sure you want to delete this country?')) {
+                        $.ajax({
+                            url: `/ajax/post/master/negara/delete`,
+                            type: 'POST',
+                            data: { id: countryId },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                                'X-Requested-With': 'XMLHttpRequest'
+                            },
+                            success: function(response) {
+                                alert('Country deleted successfully!');
+                                table.ajax.reload();
+                            },
+                            error: function(xhr, status, error) {
+                                alert('An error occurred while deleting the country.');
+                            }
+                        });
+                    }
+                });
+            }
         });
 
+        // menambahkan data
         $('#countryForm').on('submit', function(e) {
             e.preventDefault();
 
