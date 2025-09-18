@@ -26,7 +26,7 @@ $dt->query('
 
     $dt->edit('ID_COUNTRY', function ($data) {
         return "<div class='action d-flex justify-content-center gap-2'>
-                <button class='btn btn-sm btn-primary'>Edit</button>
+                <button class='btn btn-sm btn-primary update-btn' data-id='".$data['ID_COUNTRY']."'>Edit</button>
                 <button class='btn btn-sm btn-danger delete-btn' data-id='".$data['ID_COUNTRY']."' >Delete</button>
             </div>";
         

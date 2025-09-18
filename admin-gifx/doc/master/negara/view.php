@@ -77,12 +77,16 @@
                 [10, 50, 100, -1],
                 [10, 50, 100, "All"]
             ],
-            // delete
+
             drawCallback: function(settings) {
+                // fungsi ini diperlukan pd saat tombol delete diklik
+                // setelah tombol delete diklik, ambil data-id dan datatable akan melakukan request ke ajax
+                // delete
                 $('.delete-btn').on('click', function() {
-                    const countryId = $(this).data('id');
+                    const countryId = $(this).data('id'); // Mengambil dari data-id="?" dari tombol delete
                     console.log('Attempting to delete country ID:', countryId)
                     if(confirm('Are you sure you want to delete this country?')) {
+                        // fungsi ajax utk mengirim request ke server untuk menghapus data
                         $.ajax({
                             url: `/ajax/post/master/negara/delete`,
                             type: 'POST',
@@ -101,8 +105,24 @@
                         });
                     }
                 });
-            }
+                
+                // update
+                $('.update-btn').on('click', function(e){
+                    e.preventDefault();
+    
+                    const countryId = $(this).data('id');
+                    console.log('Mencoba memperbarui ID negara:', countryId);
+    
+                    const row = $(this). closest('tr');
+                        const rowData = table.row(row).data();
+                        console.log('Data baris yang diambil:', rowData);
+    
+    
+                        window.location.href = `/master/negara/update/${countryId}`;
+                })
+            },
         });
+
 
         // menambahkan data
         $('#countryForm').on('submit', function(e) {
