@@ -37,4 +37,19 @@ class Country {
         }
     }
 
+     public static function findById(int $id): array|bool {
+        try {
+            $db = Database::connect();
+            $sqlGet = $db->query("SELECT * FROM tb_country WHERE (ID_COUNTRY) = {$id}");
+            return $sqlGet->fetch_assoc() ?? false;
+
+        } catch (Exception $e) {
+            if(SystemInfo::isDevelopment()) {
+                throw $e;
+            }
+
+            return false;
+        }
+    }
+
 }
