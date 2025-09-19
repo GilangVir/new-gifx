@@ -4,10 +4,13 @@
 
 use App\Models\Country;
 use App\Models\Helper;
-
+// metode ini digunakan untuk mengambil nilai id yg kirim dari tampilan view
 $countryId = (int) Helper::form_input($_GET['d'] ?? '');
+// setelah itu, nilai id tersebut akan dibuat untuk mengambil nilai dari tabel contry berdasarkan id
+// setelah $country menyimpan nilai tersebut, digunakan untuk ditampilkan ke halaman form inputan update untuk diupdate
 $country = Country::findById($countryId);
 // Debug hanya di development
+// jika nilai id tersebut kosong/ null maka admin akan diarahkan ke halaman view
 if (!$country) {
     die('<script>alert("id not found"); location.href = "/master/negara/view"</script>');
 
@@ -62,6 +65,7 @@ if (!$country) {
         $('#updateCountryForm').on('submit', function(e) {
             e.preventDefault();
 
+            // setelah tombol disubmit, maka nilai yg dikirimkan akan diambil dan disimpan oleh $formData
             const formData = {
                 id: $('#countryId').val(),
                 countryName: $('#countryName').val().trim(),
@@ -70,14 +74,17 @@ if (!$country) {
                 phoneCode: $('#phoneCode').val().trim()
             };
 
+            // jika nilai yg diinputkan masih ada yg kosong dan buru buru disubmit maka akan menampilkan alert tersebut
             //validasi input
             if(!formData.countryName || !formData.currency || !formData.countryCode || !formData.phoneCode) {
                 alert('Semua field harus diisi');
                 return;
             }
 
+            // mengecek nilai dari $formData 
             console.log('Data yang akan diupdate:', formData);
 
+            // setelah nilai tersebut ditrima oleh formData maka ajax akan request ke server untuk melakukan update
             $.ajax({
                 processing: true,
                 serverSide: true,

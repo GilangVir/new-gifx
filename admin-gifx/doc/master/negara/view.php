@@ -109,15 +109,18 @@
                 // update
                 $('.update-btn').on('click', function(e){
                     e.preventDefault();
-    
-                    const countryId = $(this).data('id');
+                    //ambil nilai id dari tombol update
+                    // ketika tombol update diklik maka nilai id tersebut akan disimpan juga oleh const countryId
+                    // tujuannya nilai tabel berdasarkan id tersebut akan di update
+                    const countryId = $(this).data('id'); 
                     console.log('Mencoba memperbarui ID negara:', countryId);
     
+                    // metode ini digunakan untuk mengecek nilai tabel berdasarkan id tersebut
                     const row = $(this). closest('tr');
                         const rowData = table.row(row).data();
                         console.log('Data baris yang diambil:', rowData);
     
-    
+                    // setelah mendapatkan id, maka nilai tersebut akan diarahkan ke tampilan update.. untuk diupdate pd nilai tersebut
                         window.location.href = `/master/negara/update/${countryId}`;
                 })
             },
@@ -131,6 +134,7 @@
             // Debug: Cek apakah event handler berjalan
             console.log('Form submit triggered');
 
+            // menangkap nilai inputan
             const countryName = $('#countryName').val().trim();
             const currency = $('#currency').val().trim();
             const countryCode = $('#countryCode').val().trim();
@@ -142,6 +146,9 @@
                 return;
             }
 
+            // semua inputan tersebut akan disimpan oleh $data
+            // untuk di kirimkan je ajax
+            // ajax akan request ke server untuk ditambahkan
             const data = {
                 countryName: countryName,
                 currency: currency,
