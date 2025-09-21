@@ -10,14 +10,14 @@
                     <h5>List Negara</h5>
                     
                 </div>
-                 <div class="card-body">
+                <div class="card-body">
                     <table class="table table-striped" id="countriesTable">
                         <thead>
                             <tr>
-                            <th scope="col">COUNTRY NAME</th>
-                            <th scope="col">CURRENCY</th>
-                            <th scope="col">CODE</th>
-                            <th scope="col">PHONE CODE</th>
+                            <th scope="col">NAMA NEGARA</th>
+                            <th scope="col">MATA UANG</th>
+                            <th scope="col">KODE</th>
+                            <th scope="col">KODE HP</th>
                             <th scope="col">ACTION</th>
                             </tr>
                         </thead>
@@ -51,27 +51,25 @@
             drawCallback: function(settings) {
                 // fungsi ini diperlukan pd saat tombol delete diklik
                 // setelah tombol delete diklik, ambil data-id dan datatable akan melakukan request ke ajax
-                // delete
                 $('.delete-btn').on('click', function() {
-                    const countryId = $(this).data('id'); // Mengambil dari data-id="?" dari tombol delete
-                    console.log('Attempting to delete country ID:', countryId)
-                    if(confirm('Are you sure you want to delete this country?')) {
+                    const countryId = $(this).data('id');
+                    if(confirm('Apakah anda yakin untuk menghapus?')) {
                         // fungsi ajax utk mengirim request ke server untuk menghapus data
                         $.ajax({
+                            processing: true,
+                            serverSide: true,
                             url: `/ajax/post/master/negara/delete`,
                             type: 'POST',
+                            dataType: 'json',
                             data: { id: countryId },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                                 'X-Requested-With': 'XMLHttpRequest'
                             },
                             success: function(response) {
-                                alert('Country deleted successfully!');
+                                Swal.fire(response.alert)
                                 table.ajax.reload();
                             },
-                            error: function(xhr, status, error) {
-                                alert('An error occurred while deleting the country.');
-                            }
                         });
                     }
                 });
@@ -81,14 +79,8 @@
                     e.preventDefault();
                     //ambil nilai id dari tombol update
                     // ketika tombol update diklik maka nilai id tersebut akan disimpan juga oleh const countryId
-                    // tujuannya nilai tabel berdasarkan id tersebut akan di update
+                    // tujuannya untuk mengambil nilai pd tabel tersebut berdasarkan nilai id
                     const countryId = $(this).data('id'); 
-                    console.log('Mencoba memperbarui ID negara:', countryId);
-    
-                    // metode ini digunakan untuk mengecek nilai tabel berdasarkan id tersebut
-                    const row = $(this). closest('tr');
-                        const rowData = table.row(row).data();
-                        console.log('Data baris yang diambil:', rowData);
     
                     // setelah mendapatkan id, maka nilai tersebut akan diarahkan ke tampilan update.. untuk diupdate pd nilai tersebut
                         window.location.href = `/master/negara/update/${countryId}`;

@@ -41,20 +41,18 @@
             $('#countryForm').on('submit', function(e) {
                 e.preventDefault();
 
-                // Debug: Cek apakah event handler berjalan
-                console.log('Form submit triggered');
-
-                // menangkap nilai inputan
+                // menangkap nilai pd form inputan
                 const countryName = $('#countryName').val().trim();
                 const currency = $('#currency').val().trim();
                 const countryCode = $('#countryCode').val().trim();
                 const phoneCode = $('#phoneCode').val().trim();
 
                 // Validasi input
-                if (!countryName || !currency || !countryCode || !phoneCode) {
-                    alert('Please fill in all fields.');
-                    return;
-                }
+                // jika nilai kosong akan memberikan sebuah pesan
+                // if (!countryName || !currency || !countryCode || !phoneCode) {
+                //     alert('Harap isi semua kolom');
+                //     return;
+                // }
 
                 // semua inputan tersebut akan disimpan oleh $data
                 // untuk di kirimkan je ajax
@@ -71,14 +69,18 @@
                     serverSide: true,
                     url: '/ajax/post/master/negara/create',
                     type: 'POST',
+                    dataType: 'json',
                     contentType: 'application/json',
                     data: JSON.stringify(data),
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                         'X-Requested-With': 'XMLHttpRequest'
                     },
+                    // Menampilkan pesan sukses
                     success: function(response) {
-                        alert('Data berhasil disimpan!');
+                        Swal.fire(response.alert)
+                        // alert('Data berhasil disimpan!');
+                         // setelah itu mereset nilai yg ada form inputan
                         $('#countryForm')[0].reset();
                         table.ajax.reload();
                     },

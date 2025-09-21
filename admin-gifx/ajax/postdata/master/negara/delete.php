@@ -2,29 +2,28 @@
 
 use Config\Core\Database;
 
-// mencari nilai yg dikirim apakah ada nilainya
+// Ambil ID dari POST
 $countryId = isset($_POST['id']) ? $_POST['id'] : null;
-// mencari nilai yg dikirim
 
-// Debug: Log ID yang diterima
-error_log("Country ID received: " . var_export($countryId, true));
-// Debug: Log ID yang diterima
+// VALIDASI: Jika ID TIDAK ada atau kosong, GAGAL
+if(!$countryId || empty($countryId)) {
+    JsonResponse([
+        'success' => false,
+        'message' => 'Data Gagal dihapus',
+        'data' => []
+    ]);
+    exit; //Stop eksekusi
+}
 
 Database::delete("tb_country", [
     'ID_COUNTRY' => $countryId
 ]);
 
 // Validasi ID
-if(!$countryId && is_numeric($countryId)) {
-    JsonResponse([
-        'success' =>true,
-        'message' => 'Data berhasil dihapus',
-    ]);
-}else {
-        JsonResponse([
-        'gagal' => false,
-        'message' => 'Data gagal dihapus',
-    ]);
-    throw new Exception('ID tidak valid');
-}
+// Cek hasil dan return JSON response
+JsonResponse([
+    'success' =>true,
+    'message' => 'Data berhasil dihapus',
+    'data' => []
+]);
 ?>
