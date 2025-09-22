@@ -1,16 +1,14 @@
 <?php
-// File ini hanya untuk menampilkan form
-// Ambil data dari parameter URL jika ada
-
 use App\Models\Country;
 use App\Models\Helper;
-
+// metode ini digunakan untuk mengambil nilai id yg kirim dari tampilan view
 $countryId = (int) Helper::form_input($_GET['d'] ?? '');
+// setelah itu, nilai id tersebut akan dibuat untuk mengambil nilai dari tabel contry berdasarkan id
+// setelah $country menyimpan nilai tersebut, digunakan untuk ditampilkan ke halaman form inputan untuk diupdate
 $country = Country::findById($countryId);
-// Debug hanya di development
+// jika nilai id tersebut kosong/ null maka admin akan diarahkan ke halaman view
 if (!$country) {
     die('<script>alert("id not found"); location.href = "/master/negara/view"</script>');
-
 }
 
 ?>
@@ -27,22 +25,22 @@ if (!$country) {
                             <input type="hidden" name="countryId" id="countryId" value="<?= htmlspecialchars($country['ID_COUNTRY']) ?>">
 
                             <div class="mb-3">
-                                <label for="countryName" class="form-control-label">COUNTRY NAME</label>
+                                <label for="countryName" class="form-control-label">NAMA NEGARA</label>
                                 <input type="text" class="form-control" id="countryName" name="countryName"
                                 value="<?= htmlspecialchars($country['COUNTRY_NAME']) ?>">
                             </div>
                             <div class="mb-3">
-                                <label for="currency" class="form-control-label">CURRENCY</label>
+                                <label for="currency" class="form-control-label">MATA UANG</label>
                                 <input type="text" class="form-control" id="currency" name="currency" 
                                 value="<?= htmlspecialchars($country['COUNTRY_CURR']) ?>">
                             </div>
                             <div class="mb-3">
-                                <label for="countryCode" class="form-control-label">CODE</label>
+                                <label for="countryCode" class="form-control-label">KODE</label>
                                 <input type="text" class="form-control" id="countryCode" name="countryCode"  
                                 value="<?= htmlspecialchars($country['COUNTRY_CODE']) ?>">
                             </div>
                             <div class="mb-3">
-                                <label for="phoneCode" class="form-control-label">PHONE CODE</label>
+                                <label for="phoneCode" class="form-control-label">KODE HP</label>
                                 <input type="text" class="form-control" id="phoneCode" name="phoneCode"  
                                 value="<?= htmlspecialchars($country['COUNTRY_PHONE_CODE']) ?>">
                             
@@ -62,6 +60,7 @@ if (!$country) {
         $('#updateCountryForm').on('submit', function(e) {
             e.preventDefault();
 
+            // setelah tombol disubmit, maka nilai yg dikirimkan akan diambil dan disimpan oleh $formData
             const formData = {
                 id: $('#countryId').val(),
                 countryName: $('#countryName').val().trim(),
@@ -70,19 +69,13 @@ if (!$country) {
                 phoneCode: $('#phoneCode').val().trim()
             };
 
-            //validasi input
-            if(!formData.countryName || !formData.currency || !formData.countryCode || !formData.phoneCode) {
-                alert('Semua field harus diisi');
-                return;
-            }
-
-            console.log('Data yang akan diupdate:', formData);
-
+            // setelah nilai tersebut ditrima oleh formData maka ajax akan request ke server untuk melakukan update
             $.ajax({
                 processing: true,
                 serverSide: true,
                 url: '/ajax/post/master/negara/update',
                 type: 'POST',
+                dataType: 'json',
                 contentType: 'application/json',
                 data: JSON.stringify(formData),
                 headers: {
@@ -90,13 +83,10 @@ if (!$country) {
                     'X-Requested-With': 'XMLHttpRequest'
                 },
                 success: function(response) {
-                    alert('Data berhasil diupdate!');
-                    {
+                    Swal.fire(response.alert)
+                    setTimeout(function(){
                         location.href = "/master/negara/view";
-                    }
-                    $('#countryForm')[0].reset();
-                    table.ajax.reload();
-                    
+                    }, 500);
                 },
             });
         });
