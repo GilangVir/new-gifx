@@ -24,6 +24,9 @@
             // menambahkan data
             $('#bankForm').on('submit', function(e){
                 e.preventDefault();
+                // memberikan efek loading pd tombol submit pd saat diklik
+                let button = $(this).find('button[type="submit"]');
+                button.addClass('loading')
 
                 // menangkap nilai inputan
                 const bankName = $('#bankName').val().trim();
@@ -33,20 +36,16 @@
                 };
 
                 $.ajax({
-                    processing: true,
-                    serverSide: true,
                     url: '/ajax/post/master/bank/create',
                     type: 'POST',
                     dataType: 'json', 
                     contentType: 'application/json',
                     data: JSON.stringify(data),
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
 
                     // memberikan sebuah respon sukses atau gagal pd saat menginputkan
                     success: function(response) {
+                    // menghapus efek loading setelah muncul alert sukses pd saat menambahkan nilai
+                        button.removeClass('loading')
                         Swal.fire(response.alert)
                         $('#bankForm')[0].reset();
                         table.ajax.reload();

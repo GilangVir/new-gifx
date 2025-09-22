@@ -28,6 +28,24 @@ use Config\Core\Database;
     $countryCode = trim($input['countryCode']);
     $phoneCode = trim($input['phoneCode']);
 
+
+
+    // Prepare statement. jika ada duplikasi nilai pd tabel
+    $stmt = $db->prepare("SELECT COUNTRY_NAME FROM tb_country WHERE COUNTRY_NAME = ?");
+    $stmt->bind_param("s", $countryName); // "s" untuk string
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $existingData = $result->fetch_all(MYSQLI_ASSOC);
+
+    if ($existingData && count($existingData) > 0) {
+        JsonResponse([
+            'success' => false,
+            'message' => 'Data dengan nama negara "' . $countryName . '" sudah ada',
+            'data' => []
+        ]);
+        exit;
+    }
+
     Database::insert("tb_country", [
         'COUNTRY_NAME' => $countryName,
         'COUNTRY_CURR' => $currency,
