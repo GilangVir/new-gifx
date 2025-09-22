@@ -40,19 +40,15 @@
             // menambahkan data
             $('#countryForm').on('submit', function(e) {
                 e.preventDefault();
+                // memberikan efek loading pd tombol submit pd saat diklik
+                let button = $(this).find('button[type="submit"]');
+                button.addClass('loading')
 
                 // menangkap nilai pd form inputan
                 const countryName = $('#countryName').val().trim();
                 const currency = $('#currency').val().trim();
                 const countryCode = $('#countryCode').val().trim();
                 const phoneCode = $('#phoneCode').val().trim();
-
-                // Validasi input
-                // jika nilai kosong akan memberikan sebuah pesan
-                // if (!countryName || !currency || !countryCode || !phoneCode) {
-                //     alert('Harap isi semua kolom');
-                //     return;
-                // }
 
                 // semua inputan tersebut akan disimpan oleh $data
                 // untuk di kirimkan je ajax
@@ -65,22 +61,17 @@
                 };
 
                 $.ajax({
-                    processing: true,
-                    serverSide: true,
                     url: '/ajax/post/master/negara/create',
                     type: 'POST',
                     dataType: 'json',
                     contentType: 'application/json',
                     data: JSON.stringify(data),
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
+                    
                     // Menampilkan pesan sukses
                     success: function(response) {
+                        // menghapus efek loading setelah muncul alert sukses pd saat menambahkan nilai
+                        button.removeClass('loading')
                         Swal.fire(response.alert)
-                        // alert('Data berhasil disimpan!');
-                         // setelah itu mereset nilai yg ada form inputan
                         $('#countryForm')[0].reset();
                         table.ajax.reload();
                     },
