@@ -3,10 +3,10 @@
 use Config\Core\Database;
 
 // Ambil ID dari POST
-$countryId = isset($_POST['id']) ? $_POST['id'] : null;
+$idBanklst = isset($_POST['id']) ? trim($_POST['id']) : null;
 
 // VALIDASI: Jika ID TIDAK ada atau kosong, GAGAL
-if(!$countryId || empty($countryId)) {
+if(!$idBanklst || empty($idBanklst)) {
     JsonResponse([
         'success' => false,
         'message' => 'Data Gagal dihapus',
@@ -15,11 +15,10 @@ if(!$countryId || empty($countryId)) {
     exit; //Stop eksekusi
 }
 
-Database::delete("tb_country", [
-    'ID_COUNTRY' => $countryId
+Database::delete("tb_banklist", [
+    'ID_BANKLST' => $idBanklst
 ]);
 
-// Validasi ID
 // Cek hasil dan return JSON response
 JsonResponse([
     'success' =>true,

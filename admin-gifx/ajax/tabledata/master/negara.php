@@ -1,18 +1,6 @@
 <?php
 
 // PHP (Server-side Processing)
-
- //Menjalankan query SQL untuk mengambil data dari database
-$dt->query('
-    SELECT
-        COUNTRY_NAME,
-        COUNTRY_CURR,
-        COUNTRY_CODE,
-        COUNTRY_PHONE_CODE
-    FROM tb_country
-    ORDER BY COUNTRY_NAME
-');
-
     $dt->query('
         SELECT
             COUNTRY_NAME,
