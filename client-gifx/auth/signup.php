@@ -67,20 +67,7 @@ $referral = Helper::form_input($_GET['referral'] ?? "");
 </div>
 
 <script type="text/javascript">
-	let resendText = $('#resendCode').find('small')
 	$(document).ready(function() {
-		$('#resendCode').on('click', function () {
-			if (!resendText.hasClass('text-muted')) {
-				$.post("/ajax/auth/sendOtp", $('#form-signup').serialize(), function (resp) {
-					Swal.fire(resp.alert).then(() => {
-						if (resp.success) {
-							startCount(resp.data.delay);
-						}
-					});
-				}, 'json')
-			}
-		})
-		
 		$("#form-signup").on("submit", function(e) {
 			e.preventDefault();
 			let formData = $(this).serialize(),
@@ -97,19 +84,4 @@ $referral = Helper::form_input($_GET['referral'] ?? "");
 			}, 'json');
 		});
 	})
-
-	function startCount(second) {
-		let intervall = setInterval(function () {
-			resendText.text(`Send Code: ${second}s`);
-			if (!resendText.hasClass('text-muted')) {
-				resendText.addClass('text-muted');
-			}
-
-			second--;
-			if (second <= 0) {
-				clearInterval(intervall);
-				resendText.text('Send Code').removeClass('text-muted').addClass('text-white');
-			}
-		}, 1000)
-	}
 </script>
