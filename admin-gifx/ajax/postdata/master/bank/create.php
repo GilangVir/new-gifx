@@ -4,6 +4,16 @@ use Config\Core\Database;
 
 $input = json_decode(file_get_contents('php://input'), true);
 
+    if(!$adminPermissionCore->hasPermission($authorizedPermission, "/master/bank/create")) {
+    JsonResponse([
+        'code'      => 200,
+        'success'   => false,
+        'message'   => "Authorization Failed",
+        'data'      => []
+    ]);
+}
+
+
     // validasi input
     if(!$input || !isset($input['bankName']) || empty(trim($input['bankName']))) {
         JsonResponse([

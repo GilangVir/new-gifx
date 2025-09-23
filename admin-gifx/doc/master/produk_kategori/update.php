@@ -25,11 +25,6 @@ if(!$produk) {
                             value="<?= $produk['ACCKAT_NAME'] ?>">
                         </div>
                         <div class="mb-3">
-                            <label for="code" class="form-control-label">CODE PRODUK</label>
-                            <input type="text" class="form-control" id="code" name="code" readonly 
-                            value="<?= $produk['ACCKAT_CODE'] ?>">
-                        </div>
-                        <div class="mb-3">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </form>
@@ -40,30 +35,7 @@ if(!$produk) {
 </div>
 
 <script>
-    $(document).ready(function(){
-            function generateCode(nama) {
-                if (!nama) return '';
-                
-                // Mengubah teks menjadi lowercase
-                let code = nama.toLowerCase();
-                
-                // Menghapus karakter khusus dan spasi
-                code = code.replace(/[^a-z0-9\s]/g, '');
-                
-                // Mengganti spasi dengan underscore
-                code = code.replace(/\s+/g, '_');
-                
-                return code;
-            }
-
-            $('#nama').on('input', function() {
-                const nama = $(this).val().trim();
-                const generatedCode = generateCode(nama);
-                $('#code').val(generatedCode);
-            });
-
-            
-            // menambahkan data
+    $(document).ready(function(){            
             $('#produkform').on('submit', function(e) {
                 e.preventDefault();
                 // memberikan efek loading pd tombol submit pd saat diklik
@@ -73,15 +45,10 @@ if(!$produk) {
                 // menangkap nilai pd form inputan
                 const id = $('#id').val();
                 const nama = $('#nama').val().trim();
-                const code = $('#code').val().trim();
 
-                // semua inputan tersebut akan disimpan oleh $data
-                // untuk di kirimkan je ajax
-                // ajax akan request ke server untuk ditambahkan
                 const data = {
                     id: id,
                     nama: nama,
-                    code: code,
                 };
 
                 $.ajax({
@@ -90,7 +57,6 @@ if(!$produk) {
                     dataType: 'json',
                     contentType: 'application/json',
                     data: JSON.stringify(data),
-                    
                     // Menampilkan pesan sukses
                     success: function(response) {
                         // menghapus efek loading setelah muncul alert sukses pd saat menambahkan nilai

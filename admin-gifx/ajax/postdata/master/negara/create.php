@@ -4,6 +4,14 @@
 
 use Config\Core\Database;
 
+    if(!$adminPermissionCore->hasPermission($authorizedPermission, "/master/negara/create")) {
+    JsonResponse([
+        'code'      => 200,
+        'success'   => false,
+        'message'   => "Authorization Failed",
+        'data'      => []
+    ]);
+}
 
     // menangkap nilai yg dikirimkan melalui ajax
     $input = json_decode(file_get_contents('php://input'), true);

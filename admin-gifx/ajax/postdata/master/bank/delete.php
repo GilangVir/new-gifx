@@ -2,6 +2,17 @@
 
 use Config\Core\Database;
 
+
+
+    if(!$adminPermissionCore->hasPermission($authorizedPermission, "/master/bank/delete")) {
+    JsonResponse([
+        'code'      => 200,
+        'success'   => false,
+        'message'   => "Authorization Failed",
+        'data'      => []
+    ]);
+}
+
 // Ambil ID dari POST
 $idBanklst = isset($_POST['id']) ? trim($_POST['id']) : null;
 
