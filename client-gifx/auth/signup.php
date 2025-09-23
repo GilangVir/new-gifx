@@ -42,9 +42,8 @@ $referral = Helper::form_input($_GET['referral'] ?? "");
 						<input class="form-check-input" name="terms" type="checkbox" required checked
 							id="loginCheckbox">
 						<label class="form-check-label text-white" for="loginCheckbox">
-							Saya telah membaca dan menyetujui <a href="#" data-bs-toggle="modal"
-								data-bs-target="#addTaskModal" class="text-white text-decoration-underline">Syarat
-								dan Ketentuan serta Kebijakan Privasi</a>
+							Saya telah membaca dan menyetujui 
+							<a href="#" data-bs-toggle="modal" data-bs-target="#addTaskModal" class="text-white text-decoration-underline">Syarat dan Ketentuan serta Kebijakan Privasi</a>
 						</label>
 					</div>
 				</div>
