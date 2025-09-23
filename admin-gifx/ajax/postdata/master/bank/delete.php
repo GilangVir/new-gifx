@@ -3,20 +3,21 @@
 use Config\Core\Database;
 
 
-if(!$adminPermissionCore->hasPermission($authorizedPermission, "/master/negara/delete")) {
+
+    if(!$adminPermissionCore->hasPermission($authorizedPermission, "/master/bank/delete")) {
     JsonResponse([
         'code'      => 200,
         'success'   => false,
         'message'   => "Authorization Failed",
         'data'      => []
-]);
+    ]);
 }
 
 // Ambil ID dari POST
-$countryId = isset($_POST['id']) ? $_POST['id'] : null;
+$idBanklst = isset($_POST['id']) ? trim($_POST['id']) : null;
 
 // VALIDASI: Jika ID TIDAK ada atau kosong, GAGAL
-if(!$countryId || empty($countryId)) {
+if(!$idBanklst || empty($idBanklst)) {
     JsonResponse([
         'success' => false,
         'message' => 'Data Gagal dihapus',
@@ -25,11 +26,10 @@ if(!$countryId || empty($countryId)) {
     exit; //Stop eksekusi
 }
 
-Database::delete("tb_country", [
-    'ID_COUNTRY' => $countryId
+Database::delete("tb_banklist", [
+    'ID_BANKLST' => $idBanklst
 ]);
 
-// Validasi ID
 // Cek hasil dan return JSON response
 JsonResponse([
     'success' =>true,
