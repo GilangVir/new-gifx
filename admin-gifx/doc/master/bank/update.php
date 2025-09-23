@@ -20,7 +20,6 @@ if (!$bank) {
                     <h1>UPDATE NAMA BANK</h1>
                     <div class="card-body">
                         <form id="updateBank">
-                            <meta name="csrf-token" content="{{ csrf_token() }}">
 
                             <input type="hidden" name="id" id="id" value="<?= htmlspecialchars($bank['ID_BANKLST']) ?>">
 
@@ -43,6 +42,9 @@ if (!$bank) {
     $(document).ready(function() {
         $('#updateBank').on('submit', function(e) {
             e.preventDefault();
+            // memberikan efek loading pd tombol submit pd saat diklik
+            let button = $(this).find('button[type="submit"]');
+            button.addClass('loading')
             
             // setelah tombol disubmit, maka nilai yg dikirimkan akan diambil dan disimpan oleh $formData
             const formData = {
@@ -52,18 +54,14 @@ if (!$bank) {
             
             // setelah nilai tersebut ditrima oleh formData maka ajax akan request ke server untuk melakukan update
             $.ajax({
-                processing: true,
-                serverSide: true,
                 url: '/ajax/post/master/bank/update',
                 type: 'POST',
                 dataType: 'json',
                 contentType: 'application/json',
                 data: JSON.stringify(formData),
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
                 success: function(response) {
+                    // menghapus efek loading setelah muncul alert sukses pd saat menambahkan nilai
+                    button.removeClass('loading')
                     Swal.fire(response.alert)
                     setTimeout(function() {
                         location.href = "/master/bank/view";

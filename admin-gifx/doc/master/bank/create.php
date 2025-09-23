@@ -5,7 +5,6 @@
             <div class="card-header">
                 <div class="card-body">
                     <form id="bankForm">
-                        <meta name="csrf-token" content="{{ csrf_token() }}">
                         <div class="mb-3">
                             <label for="bankName" class="form-control-label">NAMA BANK</label>
                             <input type="text" class="form-control" id="bankName" name="bankName" placeholder="bank nama">

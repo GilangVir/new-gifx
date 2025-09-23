@@ -6,7 +6,6 @@
             <div class="card-header">
                 <div class="card-body">
                     <form id="countryForm">
-                        <meta name="csrf-token" content="{{ csrf_token() }}">
                         <div class="mb-3">
                             <label for="countryName" class="form-control-label">COUNTRY NAME</label>
                             <input type="text" class="form-control" id="countryName" name="countryName" placeholder="nama negara">

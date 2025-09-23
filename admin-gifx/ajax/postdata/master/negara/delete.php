@@ -2,6 +2,16 @@
 
 use Config\Core\Database;
 
+
+if(!$adminPermissionCore->hasPermission($authorizedPermission, "/master/negara/delete")) {
+    JsonResponse([
+        'code'      => 200,
+        'success'   => false,
+        'message'   => "Authorization Failed",
+        'data'      => []
+]);
+}
+
 // Ambil ID dari POST
 $countryId = isset($_POST['id']) ? $_POST['id'] : null;
 
