@@ -37,27 +37,6 @@ $referral = Helper::form_input($_GET['referral'] ?? "");
 					<span class="input-group-text"><i class="fa-regular fa-at"></i></span>
 					<input type="text" name="refferal" class="form-control" autocomplete="off" placeholder="Referal" value="<?= $referral ?>">
 				</div>
-				<hr>
-				<div class="mb-25">
-					<div class="input-group mb-0">
-						<select name="phone_code" class="input-group-text" style="width: fit-content;">
-							<?php foreach (Country::countries() as $country): ?>
-								<?php if ($country['COUNTRY_PHONE_CODE'] == "+62"): ?>
-									<option value="<?= $country['COUNTRY_PHONE_CODE'] ?>">
-										<?= $country['COUNTRY_PHONE_CODE'] ?></option>
-								<?php endif; ?>
-							<?php endforeach; ?>
-						</select>
-						<input type="number" name="phone" required data-parsley-required class="form-control"
-							min="0" autocomplete="off" placeholder="Phone Number">
-					</div>
-					<a href="javascript:void(0)" class="float-end" id="resendCode"><small class="text-sm text-white text-decoration-underline">Send Code</small></a>
-				</div>
-				<div class="input-group mb-25" style="margin-top: 2rem !important;">
-					<span class="input-group-text"><i class="fa-regular fa-key"></i></span>
-					<input type="number" name="otp" class="form-control" autocomplete="off" placeholder="OTP Code"
-						value="">
-				</div>
 				<div class="d-flex justify-content-between mb-25">
 					<div class="form-check">
 						<input class="form-check-input" name="terms" type="checkbox" required checked
