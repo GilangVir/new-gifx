@@ -1,5 +1,4 @@
 <?php
-use App\Models\Country;
 use App\Models\Helper;
 
 $referral = Helper::form_input($_GET['referral'] ?? "");
@@ -69,19 +68,19 @@ $referral = Helper::form_input($_GET['referral'] ?? "");
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#form-signup").on("submit", function(e) {
-			e.preventDefault();
-			let formData = $(this).serialize(),
+			e.preventDefault(); //mencegah form reload
+			let formData = $(this).serialize(), //ambil semua data inputan di form
 				button = $(this).find('button[type="submit"]');
 			
-			button.addClass('loading');
+			button.addClass('loading'); //memberikan efek loading ke tombol submit
 			$.post("/ajax/auth/signup", formData, function(resp) {
-				button.removeClass('loading');
+				button.removeClass('loading'); //menghapus loading setelah server balas
 				Swal.fire(resp.alert).then(() => {
-					if(resp.success) {
+					if(resp.success) { //jika sukses, arahkan user ke halaman redirect
 						location.href = resp.data.redirect;
 					}
 				});
-			}, 'json');
+			}, 'json'); //menangkap respon dari server dgn format JSON
 		});
 	})
 </script>
