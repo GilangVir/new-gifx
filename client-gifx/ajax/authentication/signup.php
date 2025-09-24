@@ -122,16 +122,20 @@ $insert = Database::insert("tb_member", [
     'MBR_IDSPN' => $defaultDSPN
 ]);
 if (!$insert) {
-    // Cek hasil dan return JSON response
     JsonResponse([
-        'success' =>true,
-        'message' => 'Data berhasil disimpan',
-        'data' => []
-    ]);
+    'success' =>false,
+    'message' => 'Data berhasil disimpan',
+    'data' => []
+]);
 }
 
 
 
+JsonResponse([
+    'success' =>true,
+    'message' => 'Data berhasil disimpan',
+    'data' => ['redirect' => '/']
+]);
 
 
 
