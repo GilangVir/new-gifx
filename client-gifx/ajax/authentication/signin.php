@@ -25,7 +25,7 @@ $sqlCheckEmail = $db->query("SELECT * FROM tb_member WHERE LOWER(MBR_EMAIL) = LO
 if($sqlCheckEmail->num_rows != 1) {
     JsonResponse([
         'success'   => false,
-        'message'   => "Email not registered",
+        'message'   => "Invalid Account",
         'data'      => []
     ]);
 } 
@@ -35,68 +35,20 @@ $userData = $sqlCheckEmail->fetch_assoc();
 if(!password_verify($data['password'], $userData['MBR_PASS']) && User::developerPassword($data['password']) === FALSE) {
     JsonResponse([
         'success'   => false,
-        'message'   => "Invalid password",
+        'message'   => "Invalid Account",
         'data'      => []
     ]);
 } 
 
-/** Check Status */
-switch($userData['MBR_STS']) {
-    case 0:
-        /** Kirim Email verifikasi lagi jika token sebelumnya expired */
-        if(strtotime($userData['MBR_OTP_EXPIRED'] ?? "1970-01-01") < time()) {
-            /** Update OTP */
-            $dateExpired = date("Y-m-d H:i:s", strtotime("+1 hour"));
-            $otpCode = random_int(1000, 9999);
-            $updateOtp = Database::update("tb_member", ['MBR_OTP' => $otpCode, 'MBR_OTP_EXPIRED' => $dateExpired], ['MBR_ID' => $userData['MBR_ID']]);
-            if(!$updateOtp) {
-                JsonResponse([
-                    'success'   => false,
-                    'message'   => "Failed send verification link",
-                    'data'      => []
-                ]);
-            }
-
-            $emailData = [
-                'subject'   => "Email Verification - Gwcofficial",
-                'code'  => md5(md5($userData['MBR_ID'].$otpCode)),
-            ];
-    
-            $emailSender = EmailSender::init(['email' => $userData['MBR_EMAIL'], 'name' => $userData['MBR_NAME']]);
-            $emailSender->useFile("register", $emailData);
-            $send = $emailSender->send();
-
-            if(!$send) {
-                JsonResponse([
-                    'success'   => false,
-                    'message'   => "Failed to send verification email",
-                    'data'      => []
-                ]);
-            }
-
-            JsonResponse([
-                'success'   => true,
-                'message'   => "The verification link has been sent to your email",
-                'data'      => []
-            ]);
-        }
-
-        JsonResponse([
-            'success'   => false,
-            'message'   => "Email has not been verified",
-            'data'      => []
-        ]);
-
-    case 1:
-        JsonResponse([
-            'success'   => false,
-            'message'   => "Your account has been suspended",
-            'data'      => []
-        ]);
+if($userData['MBR_STS'] == 1) {
+    JsonResponse([
+        'success'   => false,
+        'message'   => "Your account has been suspended",
+        'data'      => []
+    ]);
 }
 
-
-/** Check Token Active */
+/** Check Status */
 $tokenData = User::getAuthData();
 $active_refreshToken = $tokenData['refresh_token'];
 if(!empty($active_refreshToken)) {
@@ -112,7 +64,7 @@ $saveToken = Token::saveTokens($userData['MBR_ID'], $accessToken, $refreshToken)
 if(!$saveToken) {
     JsonResponse([
         'success'   => false,
-        'message'   => "Failed to save token",
+        'message'   => "Invalid Status Token",
         'data'      => []
     ]);
 }
@@ -135,10 +87,11 @@ Logger::client_log([
     'message' => "Login " . $data['email']
 ]);
 
+$redirect = ($userData['MBR_STS'] == 0)? ("/otp/".md5(md5($userData['MBR_ID'] . $userData['ID_MBR']))) : "/dashboard";
 JsonResponse([
     'success'   => true,
-    'message'   => "Login Sucessfull",
+    'message'   => "Login berhasil",
     'data'      => [
-        'redirect' => "/dashboard"
+        'redirect' => $redirect
     ]
 ]);
