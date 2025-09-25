@@ -1,5 +1,4 @@
 <?php
-use App\Models\Country;
 use App\Models\Helper;
 
 $referral = Helper::form_input($_GET['referral'] ?? "");
@@ -69,19 +68,19 @@ $referral = Helper::form_input($_GET['referral'] ?? "");
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#form-signup").on("submit", function(e) {
-			e.preventDefault();
-			let formData = $(this).serialize(),
+			e.preventDefault(); 
+			let formData = $(this).serialize(), 
 				button = $(this).find('button[type="submit"]');
 			
-			button.addClass('loading');
+			button.addClass('loading'); 
 			$.post("/ajax/auth/signup", formData, function(resp) {
-				button.removeClass('loading');
+				button.removeClass('loading'); 
 				Swal.fire(resp.alert).then(() => {
 					if(resp.success) {
 						location.href = resp.data.redirect;
 					}
 				});
-			}, 'json');
+			}, 'json'); 
 		});
 	})
 </script>
