@@ -20,8 +20,6 @@ $user = User::user();
 if(!$user) {
     die("<script>alert('Session Expired, please re-login'); location.href ='/'</script>"); 
 }
-
-$userid = md5(md5($user['MBR_ID'])) ?? "";
 ?>
 
 <!DOCTYPE html>
