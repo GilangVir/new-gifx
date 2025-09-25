@@ -7,8 +7,8 @@ use Exception;
 
 class ProfilePerusahaan {
 
-    public static string $emailDealing = "dealing@rrfx.co.id"; 
-    public static string $namaDealing = "Dealing RRFX"; 
+    public static string $emailDealing = "nerofann22@gmail.com"; 
+    public static string $namaDealing = "Allmedia - NewGIFX"; 
 
     public static function get($id = 1) {
         $db = Database::connect();
