@@ -2,6 +2,7 @@
 use Config\Core\Database;
 use App\Models\User;
 use App\Models\Helper;
+use Config\Core\EmailSender;
 
 $input = Helper::getSafeInput($_POST); 
 
@@ -94,13 +95,24 @@ $insert = Database::insert("tb_member", [
     'MBR_ID' => $mbrId,
     'MBR_IDSPN' => $defaultDSPN
 ]);
+
 if (!$insert) {
     JsonResponse([
-    'success' =>false,
-    'message' => 'Data berhasil disimpan',
-    'data' => []
-]);
+        'success' =>false,
+        'message' => 'Data berhasil disimpan',
+        'data' => []
+    ]);
 }
+
+/** Email OTP */
+$emailData = [
+    'subject' => "OTP Verification",
+    'otp'  => $otp,
+];
+
+$emailSender = EmailSender::init(['email' => $email, 'name' => $fullname]);
+$emailSender->useFile("otp", $emailData);
+$send = $emailSender->send();
 
 JsonResponse([
     'success' =>true,
