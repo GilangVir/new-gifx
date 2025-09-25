@@ -68,19 +68,19 @@ $referral = Helper::form_input($_GET['referral'] ?? "");
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#form-signup").on("submit", function(e) {
-			e.preventDefault(); //mencegah form reload
-			let formData = $(this).serialize(), //ambil semua data inputan di form
+			e.preventDefault(); 
+			let formData = $(this).serialize(), 
 				button = $(this).find('button[type="submit"]');
 			
-			button.addClass('loading'); //memberikan efek loading ke tombol submit
+			button.addClass('loading'); 
 			$.post("/ajax/auth/signup", formData, function(resp) {
-				button.removeClass('loading'); //menghapus loading setelah server balas
+				button.removeClass('loading'); 
 				Swal.fire(resp.alert).then(() => {
-					if(resp.success) { //jika sukses, arahkan user ke halaman redirect
+					if(resp.success) {
 						location.href = resp.data.redirect;
 					}
 				});
-			}, 'json'); //menangkap respon dari server dgn format JSON
+			}, 'json'); 
 		});
 	})
 </script>
