@@ -20,7 +20,7 @@ if($useOtp !== true){
     }
     // Jika OTP valid -> update status menjadi 1 (aktif)
     Database::update("tb_member", [
-        'MBR_STS' => 1
+        'MBR_STS' => -1
     ], [
         'ID_MBR' => $user['ID_MBR']
     ]);
