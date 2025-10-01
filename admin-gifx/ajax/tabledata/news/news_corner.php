@@ -10,7 +10,7 @@ $dt->query(
     BLOG_IMG,
     BLOG_SLUG,
     ID_BLOG
-    FROM tb_blog ORDER BY BLOG_TITLE'
+    FROM tb_blog WHERE BLOG_TYPE = ?', [0]
 );
 
     $dt->edit('ID_BLOG', function ($data) {
