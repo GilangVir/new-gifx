@@ -66,7 +66,7 @@ class FileUpload {
 
     public static function upload_myfile($files, $dir = "uploads", bool $compress = false, int $quality = 25): string|array {
         try {
-             Self::credential();
+            Self::credential();
             if(empty($files) || $files['error'] != 0) {
                 return $error_messages[ $files['error'] ] ?? "[ERROR] Upload file gagal";
             }
@@ -117,7 +117,6 @@ class FileUpload {
                 default: return "[Invalid Action] Unknown Action";
             }
     
-            
             /** Check Upload File */
             if($status_upload !== TRUE) {
                 return "Gagal upload file, mohon coba lagi";

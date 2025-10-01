@@ -37,6 +37,7 @@ if($sqlGet->num_rows != 1) {
     ]);
 }
 
+
 /** Check Password */
 if(!password_verify($password, $admin['ADM_PASS'])) {
     JsonResponse([
@@ -67,7 +68,8 @@ if(!$update) {
     ]);
 }
 
-Admin::setSessionData(['token' => $token]);
+Admin::setSessionData(
+['token' => $token, 'ADM_ID' => $admin['ADM_ID']]);
 JsonResponse([
     'code'      => 200,
     'success'   => true,

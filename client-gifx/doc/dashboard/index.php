@@ -1,6 +1,12 @@
 <!-- <div class="dashboard-breadcrumb mb-25">
     <h2>Dashboard</h2>
 </div> -->
+<?php
+
+
+use App\Models\FileUpload;
+
+?>
 
 <div class="row mb-25">
     <div class="col-lg-3 col-6 col-xs-12">
@@ -61,11 +67,8 @@
         <div class="dashboard-top-box dashboard-top-box-2 rounded border-0 panel-bg h-100">
             <div class="left h-100 d-flex flex-column">
                 <p class="d-flex justify-content-between mb-2">Date Reg.</p>
-                <h3 class="fw-normal"><?php
+                <h3 class="fw-normal"><?php echo $user['MBR_DATETIME'] ?></h3>
 
-use App\Models\FileUpload;
-
- echo $user['MBR_DATETIME'] ?></h3>
                 <p class="text-muted mt-auto"><a href="personal-information"><small>View Profile</small></a></p>
             </div>
             <div class="right">
@@ -100,7 +103,7 @@ use App\Models\FileUpload;
             <div class="card">
                 <div class="card-body">
                     <div id="economicCalendarWidget"></div>
-                    <script async type="text/javascript" data-type="calendar-widget" src="https://www.tradays.com/c/js/widgets/calendar/widget.js?v=13">{"width":"100%","height":"400","mode":"2","theme":1}</script>
+                    <script async type="text/javascript" data-type="calendar-widget" src="https://www.tradays.com/c/js/widgets/calendar/widget.js?v=13">{"width";"100%","height";"400","mode";"2","theme";1}</script>
                 </div>
             </div>
         </div>
