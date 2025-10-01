@@ -2,6 +2,7 @@
 
 use App\Models\FundamentalsAnalysis;
 use App\Models\Helper;
+use App\Models\FileUpload;
 
 $id = (int) Helper::form_input($_GET['d'] ?? '');
 
@@ -43,11 +44,10 @@ if (!$nilai) {
                                     <?php if (!empty($nilai['BLOG_IMG'])): ?>
                                         <div style="margin-top:10px;">
                                             <p>Gambar lama:</p>
-                                            <img src="/assets/uploads/<?= $nilai['BLOG_IMG'] ?>" 
+                                            <img src="<?= FileUpload::awsFile($nilai['BLOG_IMG']) ?>" 
                                                 alt="Preview" 
                                                 style="max-width:150px; border:1px solid #ccc; padding:3px; object-fit:cover; border:1px solid #ccc; padding:3px; cursor:pointer;"
-                                                onclick="showImageModal('/assets/uploads/<?= $nilai['BLOG_IMG'] ?>')">
-                                                
+                                                onclick="showImageModal('<?= FileUpload::awsFile($nilai['BLOG_IMG']) ?>')">
                                         </div>
                                     <?php endif; ?>
                             </div>
