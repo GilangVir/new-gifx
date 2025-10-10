@@ -23,6 +23,7 @@
                     <div class="mb-3">
                         <label for="nomer" class="form-control-label">No. Rekening</label>
                         <input type="text" class="form-control" id="nomer" name="nomer" placeholder="Nomer rekening">
+                        <small id="warning" class="text-danger" style="display:none;"></small>
                     </div>
                     <div class="mb-3">
                         <label for="buku_tabungan" class="form-label">Cover Buku Tabungan <span class="text-danger">*</span></label>
@@ -47,6 +48,24 @@
     </div>
 <script>
     
+    //validasi no.rek
+    const input = document.getElementById('nomer');
+    const warning = document.getElementById('warning');
+
+    input.addEventListener('input', function(){
+        const value = this.value.trim();
+        if(!/^\d+$/.test(value)) {
+            warning.style.display = 'block';
+            warning.textContent = 'Nomor rekening hanya boleh berisi angka!';
+        }else{
+            // Jika kembali valid (angka semua) -> sembunyikan pesan
+            warning.style.display = 'none';
+            warning.textContent = '';
+        }
+    });
+    
+
+    // validasi file upload
     $(document).ready(function(){
         document.getElementById('buku_tabungan').addEventListener('change', function() {
             const fileInput = this;

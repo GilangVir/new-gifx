@@ -12,13 +12,13 @@ class MemberBank {
     public static function status(int $status): String {
         switch ($status){
             case self::$statusPending:
-                return 'Pending';
+                return '<span style="color:red;">Pending</span>';
             case self::$statusSuccess:
-                return 'Success';
+                return '<span style="color:green;">Success</span>';
             case self::$statusRejected:
-                return 'Rejected';
+                return '<span style="color:orange;">Rejected</span>';
             default:
-                return 'Unknown';
+                return '<span style="color:gray;">Unknown</span>';
         }
     }
 }

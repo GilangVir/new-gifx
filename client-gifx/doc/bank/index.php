@@ -1,33 +1,38 @@
 <?php
+
+use App\Models\MemberBank;
+
     $query = $db->prepare('SELECT * FROM tb_banklist ORDER BY BANKLST_NAME');
     $query->execute();
     $result = $query->get_result();
     $data = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 
-<div class="row">
-    <div class="card">
-        <div class="card-header justify-content-between">
-            Daftar Bank
-        </div>
-    </div>
-
-    <?php require_once __DIR__ . "/create.php"; ?>
-
-    <!-- tabel -->
-    <div class="col">
+<div class="col-md-12">
+    <div class="row">
         <div class="card">
-            <div class="card-body">
-                <table class="table table-striped" id="tabel">
-                    <thead>
-                        <tr>
-                            <th scope="col">Tanggal Dibuat</th>
-                            <th scope="col">Rekening</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">#</th>
-                        </tr>
-                    </thead>
-                </table>
+            <div class="card-header justify-content-between">
+                Daftar Bank
+            </div>
+        </div>
+    
+        <?php require_once __DIR__ . "/create.php"; ?>
+    
+        <!-- tabel -->
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-striped" id="tabel">
+                        <thead>
+                            <tr>
+                                <th scope="col">Tanggal Dibuat</th>
+                                <th scope="col">Rekening</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">#</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -40,7 +45,7 @@
             processing: true,
             serverSide: true,
             deferRender: true,
-            scrollx: true,
+            scrollX: false,
             order: [[0, 'desc']],
             ajax: {
                 url: "/ajax/datatable/bank",
