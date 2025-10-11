@@ -5,7 +5,7 @@ use App\Models\MemberBank;
     $query = $db->prepare('SELECT * FROM tb_banklist ORDER BY BANKLST_NAME');
     $query->execute();
     $result = $query->get_result();
-    $data = $result->fetch_all(MYSQLI_ASSOC);
+    $banklist = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <div class="col-md-12">
@@ -55,7 +55,13 @@ use App\Models\MemberBank;
             lengthMenu: [
                 [10, 50, 100, -1],
                 [10, 50, 100, "All"]
-            ]
-        })
+            ], 
+        });
+
+        $('#tabel').on('click', '.update-btn', function(e){
+            e.preventDefault();
+            const id = $(this).data('id');
+            window.location.href = `/bank/update?id=${id}`;
+        });
     })
 </script>
