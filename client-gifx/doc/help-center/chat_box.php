@@ -73,6 +73,12 @@ $ticket = $query->get_result()->fetch_assoc();
                 $('#chat-box').scrollTop($('#chat-box')[0].scrollHeight);
             });
         }
+
+        // Muat chat pertama kali
+        reloadChat();
+
+        // Auto reload setiap 3 detik
+        setInterval(reloadChat, 2000);
     
         $('#form').on('submit', function(e){
             e.preventDefault();

@@ -1,8 +1,4 @@
 <?php
-use Config\Core\Database;
-
-$db = Database::connect();
-
 // ambil kode tiket dari URL
 $code = $_GET['code'] ?? null;
 

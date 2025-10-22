@@ -106,11 +106,14 @@ $admin = $query->get_result()->fetch_assoc();
         // Muat chat pertama kali
         reloadChat();
 
+        // Auto reload setiap 3 detik
+        setInterval(reloadChat, 2000);
+
 
         $('#form').on('submit', function(e){
             e.preventDefault();
-
-            const formData = new FormData(form);
+            // this : otomatis mengikat ke form yang sedang disubmit, sehingga semua input di dalamnya akan ikut terkirim ke server
+            const formData = new FormData(this);
 
             $.ajax({
                 url: '/ajax/post/support/ticket/send_chats',
