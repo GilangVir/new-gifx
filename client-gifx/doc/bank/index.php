@@ -11,8 +11,8 @@ use App\Models\MemberBank;
 <div class="col-md-12">
     <div class="row">
         <div class="card">
-            <div class="card-header justify-content-between">
-                Daftar Bank
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h6 class="mb-0 fw-bold text-primary">Daftar Bank</h6>
             </div>
         </div>
     

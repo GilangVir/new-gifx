@@ -9,8 +9,8 @@ $values = $result->fetch_all(MYSQLI_ASSOC);
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <div class="row">
         <div class="card">
-            <div class="card-header justify-content-between">
-                <h5>Personal information</h5>
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h6 class="mb-0 fw-bold text-primary">Personal Information</h6>
             </div>
         </div>
         <div class="col">
@@ -106,9 +106,9 @@ $values = $result->fetch_all(MYSQLI_ASSOC);
                                 <label for="address">Address</label>
                                 <textarea class="form-control" placeholder="Leave a comment here" id="address" name="address" style="height: 100px"></textarea>
                             </div>
-                            <div class='action d-flex justify-content-start gap-2'>
-                                <button class='btn btn-sm btn-warning text-white' name="submit" type="submit">Submit</button>
-                                <button class='btn btn-sm btn-danger'>Reset</button>
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="reset" class="btn btn-outline-secondary">Reset</button>
                             </div>
                         </div>
                     </form>

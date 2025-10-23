@@ -1,8 +1,8 @@
 <div class="col">
         <div class="card">
-            <div class="card-header">
-                <div>Tambah Bank</div>
-            </div>
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0 fw-bold text-primary">Tambah Bank</h6>
+                </div>
             <div class="card-body">
                 <form id="form">
                     <div class="mb-3">
@@ -38,9 +38,7 @@
                     </div>
                     <!-- Tombol Submit -->
                     <div class="d-flex justify-content-center">
-                        <button type="submit" class="btn btn-warning px-4" style="color:white;">
-                            Submit
-                        </button>
+                        <button type="submit" class="btn btn-primary w-100">Submit</button>
                     </div>
                 </form>
             </div>
