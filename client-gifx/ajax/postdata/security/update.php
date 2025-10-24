@@ -16,7 +16,16 @@ foreach($input as $key => $value){
     }
 }
 
-// Pastikan password baru = konfirmasi
+// validasi password baru tidak boleh sama dengan password lama
+if ($input['password_baru'] == $input['password_lama']) {
+    JsonResponse([
+        'success' => false,
+        'message' => 'Password baru dan password lama tidak boleh sama',
+        'data' => []
+    ]);
+}
+
+// Pastikan password baru == konfirmasi
 if ($input['password_baru'] !== $input['konfirm_password']) {
     JsonResponse([
         'success' => false,
@@ -53,8 +62,8 @@ $update = Database::update('tb_member', [
     'MBR_PASS' => $newPass
 ], ['ID_MBR' => $input['id']]);
     JsonResponse([
-         'success' => true,
-         'message' => 'Berhasil',
-         'data' => []
-     ]);
+        'success' => true,
+        'message' => 'Berhasil',
+        'data' => ['redirect' => '/logout']
+    ]);
 ?>

@@ -4,6 +4,7 @@ use App\Models\Helper;
 
 $input = json_decode(file_get_contents('php://input'), true);
 
+
 $input = Helper::getSafeInput([
     'name' => $input['name'] ?? '',
     'email' => $input['email'] ?? '',
@@ -12,7 +13,7 @@ $input = Helper::getSafeInput([
     'kabupaten' => $input['kabupaten'] ?? '',
     'kecamatan' => $input['kecamatan'] ?? '',
     'kelurahan' => $input['kelurahan'] ?? '',
-    'kodepos' => $input['kodepos'] ?? '',
+    // 'kodepos' => $input['kodepos'] ?? '',
     'tmptlahir' => $input['tmptlahir'] ?? '',
     'date' => $input['date'] ?? '',
     'gender' => $input['gender'] ?? '',
@@ -29,6 +30,21 @@ foreach($input as $key => $value){
         ]);
     }
 }
+
+// 🔹 ambil kodepos otomatis berdasarkan kecamatan
+$query = $db->prepare("SELECT KDP_POS FROM tb_kodepos WHERE KDP_KECAMATAN LIKE CONCAT('%', ?, '%') LIMIT 1");
+$query->bind_param("s", $input['kecamatan']);
+$query->execute();
+$kodeposData = $query->get_result()->fetch_assoc();
+$kodepos = $kodeposData['KDP_POS'] ?? '';
+
+// 🔹 ambil data user
+$user['MBR_ID'];
+$stmt = $db->prepare("SELECT * FROM tb_member WHERE MBR_ID = ?");
+$stmt->bind_param("i", $user['MBR_ID']);
+$stmt->execute();
+$result = $stmt->get_result();
+$data = $result->fetch_assoc();
 
 $user['MBR_ID'];
 $stmt = $db->prepare("SELECT * FROM tb_member WHERE MBR_ID = ?");
@@ -56,6 +72,7 @@ $insert = Database::update('tb_member', [
     'MBR_ADDRESS' => $input['address'],
     'MBR_PHONE_CODE' => $codeNomer,
     'MBR_PHONE' => $input['nomer'],
+    'MBR_ZIP' => $kodepos,
     'MBR_OTP_EXPIRED' => $OtpExpired,
     'MBR_DATETIME' => $dateTime,
     // 'MBR_CODE' => $data['MBR_CODE'],

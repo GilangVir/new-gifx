@@ -160,7 +160,14 @@ function togglePassword(buttonId, inputId) {
                 data: JSON.stringify(data),
                 success: function(response) {
                     button.removeClass('loading')
-                    Swal.fire(response.alert)
+                    Swal.fire({
+                        icon: response.success ? 'success' : 'error',
+                        title: response.message
+                    }).then(() => {
+                        if(response.success && response.data.redirect) {
+                            window.location.href = response.data.redirect; // redirect ke login/logout
+                        }
+                    });
                     $('#form')[0].reset()
                 }
             })

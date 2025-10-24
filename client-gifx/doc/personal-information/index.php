@@ -4,6 +4,11 @@ $query = $db->prepare('SELECT DISTINCT KDP_PROV FROM tb_kodepos ORDER BY KDP_PRO
 $query->execute();
 $result = $query->get_result();
 $values = $result->fetch_all(MYSQLI_ASSOC);
+
+$query = $db->prepare('SELECT * FROM tb_member WHERE MBR_ID = ?');
+$query->bind_param("s", $user['MBR_ID']);
+$query->execute();
+$member = $query->get_result()->fetch_assoc();
 ?>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
@@ -40,11 +45,11 @@ $values = $result->fetch_all(MYSQLI_ASSOC);
                         <div class="row">
                             <div class="col-md-4 mb-2">
                                 <label for="name" class="form-label">Full Name</label>
-                                <input type="text" class="form-control" id="name" name="name">
+                                <input type="text" class="form-control" id="name" name="name" value="<?= $member['MBR_NAME']?>" disabled>
                             </div>
                             <div class="col-md-4 mb-2">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email">
+                                <input type="email" class="form-control" id="email" name="email" value="<?= $member['MBR_EMAIL']?>" disabled>
                             </div>
                             <div class="col-md-4 mb-2">
                                 <label for="nomer" class="form-label">nomer telepon</label>
@@ -84,15 +89,24 @@ $values = $result->fetch_all(MYSQLI_ASSOC);
                             </div>
                             <div class="col-md-4 mb-2">
                                 <label for="kodepos" class="form-label required">Kode pos</label>
-                                <input type="kodepos" class="form-control" id="kodepos" name="kodepos">
+                                <input type="text" class="form-control" id="kodepos" name="kodepos" readonly>
                             </div>
                             <div class="col-md-5 mb-2">
                                 <label for="tmptlahir" class="form-label required">Place or birth</label>
-                                <input type="tmptlahir" class="form-control" id="tmptlahir" name="tmptlahir">
+                                <input type="text" class="form-control" id="tmptlahir" name="tmptlahir">
                             </div>
                             <div class="col-md-3 mb-2">
                                 <label for="date" class="form-label required">Date</label>
                                 <input type="date" class="form-control" id="date" name="date">
+                                <style>
+                                    #date::-webkit-calendar-picker-indicator {
+                                        filter: invert(1) brightness(0);
+                                        cursor: pointer;
+                                    }
+                                    #date::-moz-calendar-picker-indicator {
+                                        filter: invert(1) brightness(0);
+                                    }
+                                </style>
                             </div>
                             <div class="col-md-4 mb-2">
                                 <label for="gender" class="form-label required">Gender</label>
@@ -157,11 +171,16 @@ $values = $result->fetch_all(MYSQLI_ASSOC);
                 $('#kelurahan').append('<option value="'+val.KDP_KELURAHAN+'">'+val.KDP_KELURAHAN+'</option>');
             });
         });
+
+        // 🔹 Ambil kode pos otomatis dari backend
+        $.getJSON('/ajax/post/profil/getKodepos?kec=' + kec, function(res) {
+            if (res && res.KDP_POS) {
+                $('#kodepos').val(res.KDP_POS);
+            } else {
+                $('#kodepos').val('');
+            }
+        });
     });
-
-
-
-
     $(document).ready(function(){
         $('#form').on('submit', function(e){
             e.preventDefault();
